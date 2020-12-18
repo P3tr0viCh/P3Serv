@@ -1,0 +1,117 @@
+#include "P3ServStrings.h"
+
+STRINGTABLE
+BEGIN
+IDS_COPYRIGHT,
+        "© Константин Дураев (Уральская Сталь, ЦВТС)|@P3tr0viCh@mail.ru"
+
+IDS_APP_TITLE,
+        "Передача данных на ИСВС"
+IDS_APP_WORK_IN_PROGRESS,
+        "Отправка данных на сервер ИСВС..."
+
+IDS_QUESTION_CLOSE_PROGRAM,
+        "Закрыть программу и остановить передачу данных на сервер?"
+
+IDS_ERROR_ALREADY_RUN,
+        "Программа уже запущена"
+IDS_ERROR_LOAD_SETTINGS,
+        "Во время чтения настроек произошла критическая ошибка.\n\nДальнейшая работа невозможна"
+IDS_ERROR_SAVE_SETTINGS,
+        "Не удалось сохранить настройки"
+IDS_ERROR_PASS_WRONG,
+        "Неправильный пароль.\n\nПопробуйте ещё раз"
+IDS_ERROR_UNKNOWN_EXCEPTION,
+        "Возникла непредвиденная ошибка:\n\n%s"
+IDS_ERROR_NEED_INT,
+        "Необходимо указать число"
+IDS_ERROR_TEXT_EMPTY,
+        "Строковое значение не указано"
+IDS_ERROR_CHECK_PASS,
+        "Введенные пароли не совпадают. Повторите ввод нового пароля и его подверждения";
+IDS_ERROR_LOCAL_DB_NOT_EXISTS,
+        "Локальная база данных не существует: '%s'"
+
+IDS_TEXT_DATABASE_CHECK_OK,
+        "Результат проверки положительный"
+IDS_TEXT_DATABASE_CHECK_FAIL,
+        "Результат проверки отрицательный"
+
+IDS_CONNECTION_ACCESS,
+        "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=%s;Persist Security Info=False;User ID=%s;Jet OLEDB:Database Password=%s;"
+IDS_CONNECTION_MYSQL,
+        "DRIVER={MySQL ODBC 3.51 Driver};SERVER=%s;PORT=%s;DATABASE=%s;USER=%s;PASSWORD=%s;OPTION=3;"
+
+IDS_LOG_ABOUT,
+        "ABOUT"
+IDS_LOG_EXCEPTION,
+        "exception: %s"
+IDS_LOG_EXCEPTION_IN_MAIN_FUNCTION,
+        "exception in main function: %s"
+
+IDS_LOG_ERROR_CRC_EMPTY,
+        "CRC empty"
+IDS_LOG_ERROR_CRC_WRONG,
+        "CRC wrong"
+IDS_LOG_ERROR_LOAD_SETTINGS,
+        "read settings fail: %s"
+IDS_LOG_ERROR_SAVE_SETTINGS,
+        "write settings fail: %s"
+IDS_LOG_ERROR_CHECK_SETTINGS,
+        "check settings for %s"
+
+IDS_LOG_ERROR_LOCAL_DB_NOT_EXISTS,
+        "local database not exists: '%s'"
+IDS_LOG_ERROR_LOCAL_DB_OPEN,
+        "local database open error: '%s'"
+IDS_LOG_ERROR_SERVER_DB_OPEN,
+        "server database open error: '%s'"
+IDS_LOG_ERROR_KOKSOHIM_DB_CORRUPT,
+        "koksohim local database corrupted"
+IDS_LOG_ERROR_CORRUPTED_RECORD,
+        "corrupted record #%d: '%s', '%s', '%s', '%s'"
+IDS_LOG_ERROR_CREATE_SYNCFOLDER,
+        "sync folder create error"
+IDS_LOG_ERROR_CREATE_SYNCFILE,
+        "sync file create error"
+IDS_LOG_ERROR_SAVE_SYNCFILE,
+        "sync file write error"
+
+IDS_LOG_ERROR_TERMINATED_IN_WORK_PROGRESS,
+        "app terminated in work progress"
+IDS_LOG_DATABASE_CHECK_RESULT,
+        "%s database check result: %s";
+
+IDS_LOG_AGLODOZA_DATA_SAVED,
+        "data saved, count=%d|%d|%d (%s)"
+IDS_LOG_KOKSOHIM_DATA_SAVED,
+        "data saved, count=%d (%s)"
+
+IDS_LOG_LOGIN_OK,
+        "login: ok"
+IDS_LOG_LOGIN_CANCEL,
+        "login: cancel"
+IDS_LOG_OPTIONS_OK,
+        "options: ok"
+IDS_LOG_OPTIONS_CANCEL,
+        "options: cancel"
+
+IDS_SQL_SELECT,                 "SELECT"
+IDS_SQL_UPDATE,                 "UPDATE"
+IDS_SQL_INSERT,                 "INSERT INTO"
+IDS_SQL_DELETE,                 "DELETE"
+IDS_SQL_FROM,                   "FROM"
+IDS_SQL_WHERE,                  "WHERE"
+IDS_SQL_SET,                    "SET"
+IDS_SQL_VALUES,                 "VALUES"
+IDS_SQL_AND,                    "AND"
+
+IDS_SQL_TABLE_AGLODOZA_DOZSUM,          "DozatorSum"
+IDS_SQL_TABLE_AGLODOZA_GROUPSUM,        "GroupSum"
+IDS_SQL_TABLE_AGLODOZA_GROUPS,          "Groups"
+IDS_SQL_TABLE_AGLODOZA_DOZSUM_MYSQL,    "aglodoza_dozsum"
+IDS_SQL_TABLE_AGLODOZA_GROUPSUM_MYSQL,  "aglodoza_groupsum"
+IDS_SQL_TABLE_AGLODOZA_GROUPS_MYSQL,    "aglodoza_groups"
+IDS_SQL_TABLE_KOKSOHIM_MYSQL,           "koksohim"
+
+END

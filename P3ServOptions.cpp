@@ -89,7 +89,7 @@ void TfrmOptions::UpdateForm() {
 void TfrmOptions::UpdateSettings() {
 	Settings->OptionsPass = eOptionsPass->Text;
 
-	Settings->ProgramMode = rgProgramMode->ItemIndex + 1;
+	Settings->ProgramMode = TProgramMode(rgProgramMode->ItemIndex + 1);
 
 	Settings->MySQLHost = eMySQLHost->Text;
 	Settings->MySQLUser = eMySQLUser->Text;
@@ -138,10 +138,14 @@ bool TfrmOptions::CheckFileExists(TCustomEdit * Edit) {
 		return true;
 	}
 
-	MsgBoxErr(Format(IDS_ERROR_LOCAL_DB_NOT_EXISTS, Edit->Text));
-	ControlSetFocus(Edit);
+	if (MsgBoxYesNo(Format(IDS_ERROR_LOCAL_DB_NOT_EXISTS, Edit->Text))) {
+		return true;
+	}
+	else {
+		ControlSetFocus(Edit);
 
-	return false;
+		return false;
+	}
 }
 
 // ---------------------------------------------------------------------------
@@ -240,7 +244,6 @@ void __fastcall TfrmOptions::btnCheckMySQLClick(TObject *Sender) {
 				Database = "koksohim";
 				Settings->ProgramMode = pmKoksohim;
 				MsgBox();
-				return;
 				break;
 			case pmDomna:
 				Database = "domna";

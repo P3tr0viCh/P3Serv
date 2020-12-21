@@ -17,9 +17,8 @@
 #include "P3ServAdd.h"
 #include "P3ServStrings.h"
 
-#include "P3ServTDozSumRecord.h"
-#include "P3ServTGroupSumRecord.h"
-#include "P3ServTGroupsRecord.h"
+#include "P3ServMainFunctionAglodoza.h"
+#include "P3ServMainFunctionKoksohim.h"
 
 #include "P3ServLogin.h"
 #include "P3ServOptions.h"
@@ -75,8 +74,9 @@ void __fastcall TMain::ApplicationEventsException(TObject * Sender,
 
 // ---------------------------------------------------------------------------
 void TMain::TrayIconMenuClick(TTrayIconMenuItem TrayIconMenuItem) {
-	// TODO: stop timer
+	TimerSetEnabled(false);
 	PopupMenuSetEnabled(false);
+
 	try {
 		switch (TrayIconMenuItem) {
 		case tmCheck:
@@ -114,6 +114,53 @@ void TMain::TrayIconMenuClick(TTrayIconMenuItem TrayIconMenuItem) {
 	}
 	__finally {
 		PopupMenuSetEnabled(true);
+		TimerSetEnabled(true);
+	}
+}
+
+// ---------------------------------------------------------------------------
+enum TTimerPeriod {
+	tpOff = 0, tp1 = 1, tp5 = 5, tp10 = 10, tp15 = 15, tp20 = 20, tp30 = 30,
+	tp60 = 60
+};
+
+// ---------------------------------------------------------------------------
+void TMain::TimerSetEnabled(bool Enabled) {
+	// TODO
+	TTimerPeriod SettingsTimerPeriod = tp30;
+
+	if (Enabled) {
+		if (SettingsTimerPeriod == tpOff) {
+			Timer->Enabled = false;
+			return;
+		}
+
+		int P = SettingsTimerPeriod;
+		int C = 59 / P;
+
+		int T = 0;
+
+		for (int m = 0; m < 60; m++) {
+
+			for (int i = 1; i <= C; i++) {
+				T = P * i;
+				if (m < T) {
+					break;
+				}
+			}
+
+			if (m >= T) {
+				T = 0;
+			}
+
+			WriteToLog(IntToStr(m) + "=" + IntToStr(T));
+		}
+
+		// TODO
+		Timer->Enabled = false;
+	}
+	else {
+		Timer->Enabled = false;
 	}
 }
 
@@ -154,6 +201,8 @@ void TMain::MainFunction() {
 	TrayIcon->Hint = LoadStr(IDS_APP_WORK_IN_PROGRESS);
 	TrayIconLoadFromResourceName(TrayIcon, "R_ICON_PROGRESS");
 
+	TimerSetEnabled(false);
+
 	try {
 		try {
 			switch (Settings->ProgramMode) {
@@ -165,10 +214,9 @@ void TMain::MainFunction() {
 				break;
 			case pmDomna:
 				throw Exception("TODO: domna");
-				break;
+				// break;
 			default:
 				throw Exception("check settings");
-				break;
 			}
 		}
 		catch (Exception &E) {
@@ -176,9 +224,16 @@ void TMain::MainFunction() {
 		}
 	}
 	__finally {
+		TimerSetEnabled(true);
+
 		TrayIconLoadFromResourceName(TrayIcon, "MAINICON");
 		TrayIcon->Hint = LoadStr(IDS_APP_TITLE);
 	}
+}
+
+// ---------------------------------------------------------------------------
+void __fastcall TMain::TimerTimer(TObject *Sender) {
+	MainFunction();
 }
 
 // ---------------------------------------------------------------------------

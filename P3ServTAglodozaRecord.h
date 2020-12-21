@@ -8,7 +8,7 @@
 #include <ObjList.h>
 
 // ---------------------------------------------------------------------------
-class TLocalRecord : public TObject {
+class TAglodozaRecord : public TObject {
 private:
 	int FID;
 
@@ -21,7 +21,7 @@ public:
 };
 
 // ---------------------------------------------------------------------------
-typedef TObjList<TLocalRecord>TLocalRecordList;
+typedef TObjList<TAglodozaRecord>TAglodozaRecordList;
 
 // ---------------------------------------------------------------------------
 #endif

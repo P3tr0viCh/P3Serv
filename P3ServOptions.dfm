@@ -57,8 +57,10 @@ object frmOptions: TfrmOptions
     TabOrder = 2
     object tsMain: TTabSheet
       Caption = #1055#1088#1086#1075#1088#1072#1084#1084#1072
+      ExplicitLeft = 0
       ExplicitTop = 32
       ExplicitWidth = 441
+      ExplicitHeight = 0
       object gbOptions: TGroupBox
         Left = 8
         Top = 8
@@ -105,8 +107,10 @@ object frmOptions: TfrmOptions
     object tsMySQL: TTabSheet
       Caption = 'MySQL'
       ImageIndex = 1
+      ExplicitLeft = 0
       ExplicitTop = 32
       ExplicitWidth = 441
+      ExplicitHeight = 0
       object gbMySQL: TGroupBox
         Left = 8
         Top = 8
@@ -159,8 +163,10 @@ object frmOptions: TfrmOptions
     object tsAglodoza: TTabSheet
       Caption = #1040#1075#1083#1086#1076#1086#1079#1080#1088#1086#1074#1082#1072
       ImageIndex = 2
+      ExplicitLeft = 0
       ExplicitTop = 32
       ExplicitWidth = 441
+      ExplicitHeight = 0
       object eAglodozaScaleNum: TLabeledEdit
         Left = 8
         Top = 32
@@ -203,8 +209,10 @@ object frmOptions: TfrmOptions
     object tsKoksohim: TTabSheet
       Caption = #1044#1086#1079#1072#1090#1086#1088#1099' '#1050#1061#1055
       ImageIndex = 3
+      ExplicitLeft = 0
       ExplicitTop = 32
       ExplicitWidth = 441
+      ExplicitHeight = 0
       object eKoksohimScaleNum: TLabeledEdit
         Left = 8
         Top = 32
@@ -247,6 +255,8 @@ object frmOptions: TfrmOptions
     object tsDomna: TTabSheet
       Caption = #1044#1086#1084#1077#1085#1085#1072#1103' '#1087#1077#1095#1100
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 441
       ExplicitHeight = 206
       object eDomnaScaleNum: TLabeledEdit

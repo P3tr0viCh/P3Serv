@@ -4,8 +4,8 @@ object Main: TMain
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'P3Serv'
-  ClientHeight = 252
-  ClientWidth = 482
+  ClientHeight = 200
+  ClientWidth = 400
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +20,8 @@ object Main: TMain
   PixelsPerInch = 96
   TextHeight = 13
   object PopupMenu: TPopupMenu
-    Left = 328
-    Top = 112
+    Left = 224
+    Top = 96
     object miCheck: TMenuItem
       Caption = #1055#1077#1088#1077#1076#1072#1090#1100' '#1076#1072#1085#1085#1099#1077
       Default = True
@@ -53,12 +53,18 @@ object Main: TMain
     PopupMenu = PopupMenu
     Visible = True
     OnClick = TrayIconClick
-    Left = 144
-    Top = 88
+    Left = 32
+    Top = 24
   end
   object ApplicationEvents: TApplicationEvents
     OnException = ApplicationEventsException
-    Left = 232
-    Top = 40
+    Left = 176
+    Top = 24
+  end
+  object Timer: TTimer
+    Enabled = False
+    OnTimer = TimerTimer
+    Left = 128
+    Top = 104
   end
 end

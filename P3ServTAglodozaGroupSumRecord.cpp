@@ -2,19 +2,19 @@
 
 #pragma hdrstop
 
-#include "P3ServTGroupSumRecord.h"
+#include "P3ServTAglodozaGroupSumRecord.h"
 
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
 
 // ---------------------------------------------------------------------------
-bool __fastcall TGroupSumRecord::Equals(TObject * Obj) {
+bool __fastcall TAglodozaGroupSumRecord::Equals(TObject * Obj) {
 	if (this == Obj)
 		return true;
 	if (Obj == NULL || ClassType() != Obj->ClassType())
 		return false;
 
-	TGroupSumRecord * Record = (TGroupSumRecord*) Obj;
+	TAglodozaGroupSumRecord * Record = (TAglodozaGroupSumRecord*) Obj;
 
 	if (ID != Record->ID)
 		return false;
@@ -28,12 +28,12 @@ bool __fastcall TGroupSumRecord::Equals(TObject * Obj) {
 	// TODO :
 	throw EMethodNotFound("TP3SumRecord::Assign");
 
-	return true;
+	// return true;
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TGroupSumRecord::Assign(TObject * Source) {
-	TGroupSumRecord * Record = (TGroupSumRecord*) Source;
+void __fastcall TAglodozaGroupSumRecord::Assign(TObject * Source) {
+	TAglodozaGroupSumRecord * Record = (TAglodozaGroupSumRecord*) Source;
 
 	ID = Record->ID;
 
@@ -46,10 +46,10 @@ void __fastcall TGroupSumRecord::Assign(TObject * Source) {
 }
 
 // ---------------------------------------------------------------------------
-String __fastcall TGroupSumRecord::ToString() {
+String __fastcall TAglodozaGroupSumRecord::ToString() {
 	String S;
 
-	S = "TGroupSumRecord{";
+	S = "TAglodozaGroupSumRecord{";
 	S += "ID='" + IntToStr(ID) + "'";
 	S += ",";
 	S += "Line='" + IntToStr(Line) + "'";
@@ -59,7 +59,7 @@ String __fastcall TGroupSumRecord::ToString() {
 
 	S += "GroupId=";
 	S += "{";
-	for (int i = 1; i <= GROUPS_COUNT; i++) {
+	for (int i = 1; i <= AGLODOZA_GROUPS_COUNT; i++) {
 		S += FloatToStr(GroupId[i]) + "|";
 	}
 	S += "}";
@@ -67,7 +67,7 @@ String __fastcall TGroupSumRecord::ToString() {
 
 	S += "GroupSum=";
 	S += "{";
-	for (int i = 1; i <= GROUPS_COUNT; i++) {
+	for (int i = 1; i <= AGLODOZA_GROUPS_COUNT; i++) {
 		S += FloatToStr(GroupSum[i]) + "|";
 	}
 	S += "}";
@@ -78,8 +78,8 @@ String __fastcall TGroupSumRecord::ToString() {
 }
 
 // ---------------------------------------------------------------------------
-float __fastcall TGroupSumRecord::GetGroupId(int Index) {
-	if (Index >= 1 && Index <= GROUPS_COUNT) {
+float __fastcall TAglodozaGroupSumRecord::GetGroupId(int Index) {
+	if (Index >= 1 && Index <= AGLODOZA_GROUPS_COUNT) {
 		return FGroupId[Index];
 	}
 
@@ -88,8 +88,8 @@ float __fastcall TGroupSumRecord::GetGroupId(int Index) {
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TGroupSumRecord::SetGroupId(int Index, float Value) {
-	if (Index >= 1 && Index <= GROUPS_COUNT) {
+void __fastcall TAglodozaGroupSumRecord::SetGroupId(int Index, float Value) {
+	if (Index >= 1 && Index <= AGLODOZA_GROUPS_COUNT) {
 		FGroupId[Index] = Value;
 
 		return;
@@ -100,8 +100,8 @@ void __fastcall TGroupSumRecord::SetGroupId(int Index, float Value) {
 }
 
 // ---------------------------------------------------------------------------
-float __fastcall TGroupSumRecord::GetGroupSum(int Index) {
-	if (Index >= 1 && Index <= GROUPS_COUNT) {
+float __fastcall TAglodozaGroupSumRecord::GetGroupSum(int Index) {
+	if (Index >= 1 && Index <= AGLODOZA_GROUPS_COUNT) {
 		return FGroupSum[Index];
 	}
 
@@ -110,8 +110,8 @@ float __fastcall TGroupSumRecord::GetGroupSum(int Index) {
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TGroupSumRecord::SetGroupSum(int Index, float Value) {
-	if (Index >= 1 && Index <= GROUPS_COUNT) {
+void __fastcall TAglodozaGroupSumRecord::SetGroupSum(int Index, float Value) {
+	if (Index >= 1 && Index <= AGLODOZA_GROUPS_COUNT) {
 		FGroupSum[Index] = Value;
 
 		return;

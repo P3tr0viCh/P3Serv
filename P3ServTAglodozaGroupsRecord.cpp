@@ -2,19 +2,19 @@
 
 #pragma hdrstop
 
-#include "P3ServTGroupsRecord.h"
+#include "P3ServTAglodozaGroupsRecord.h"
 
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
 
 // ---------------------------------------------------------------------------
-bool __fastcall TGroupsRecord::Equals(TObject * Obj) {
+bool __fastcall TAglodozaGroupsRecord::Equals(TObject * Obj) {
 	if (this == Obj)
 		return true;
 	if (Obj == NULL || ClassType() != Obj->ClassType())
 		return false;
 
-	TGroupsRecord * Record = (TGroupsRecord*) Obj;
+	TAglodozaGroupsRecord * Record = (TAglodozaGroupsRecord*) Obj;
 
 	if (ID != Record->ID)
 		return false;
@@ -31,8 +31,8 @@ bool __fastcall TGroupsRecord::Equals(TObject * Obj) {
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TGroupsRecord::Assign(TObject * Source) {
-	TGroupsRecord * Record = (TGroupsRecord*) Source;
+void __fastcall TAglodozaGroupsRecord::Assign(TObject * Source) {
+	TAglodozaGroupsRecord * Record = (TAglodozaGroupsRecord*) Source;
 
 	ID = Record->ID;
 	FullName = Record->FullName;
@@ -42,10 +42,10 @@ void __fastcall TGroupsRecord::Assign(TObject * Source) {
 }
 
 // ---------------------------------------------------------------------------
-String __fastcall TGroupsRecord::ToString() {
+String __fastcall TAglodozaGroupsRecord::ToString() {
 	String S;
 
-	S = "TGroupsRecord{";
+	S = "TAglodozaGroupsRecord{";
 	S += "ID='" + IntToStr(ID) + "'";
 	S += ",";
 	S += "FullName='" + FullName + "'";

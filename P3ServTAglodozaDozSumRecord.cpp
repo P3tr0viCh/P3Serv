@@ -2,19 +2,19 @@
 
 #pragma hdrstop
 
-#include "P3ServTDozSumRecord.h"
+#include "P3ServTAglodozaDozSumRecord.h"
 
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
 
 // ---------------------------------------------------------------------------
-bool __fastcall TDozSumRecord::Equals(TObject * Obj) {
+bool __fastcall TAglodozaDozSumRecord::Equals(TObject * Obj) {
 	if (this == Obj)
 		return true;
 	if (Obj == NULL || ClassType() != Obj->ClassType())
 		return false;
 
-	TDozSumRecord * Record = (TDozSumRecord*) Obj;
+	TAglodozaDozSumRecord * Record = (TAglodozaDozSumRecord*) Obj;
 
 	if (ID != Record->ID)
 		return false;
@@ -26,14 +26,14 @@ bool __fastcall TDozSumRecord::Equals(TObject * Obj) {
 		return false;
 
 	// TODO :
-	throw EMethodNotFound("TDozSumRecord::Assign");
+	throw EMethodNotFound("TAglodozaDozSumRecord::Assign");
 
-	return true;
+	// return true;
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TDozSumRecord::Assign(TObject * Source) {
-	TDozSumRecord * Record = (TDozSumRecord*) Source;
+void __fastcall TAglodozaDozSumRecord::Assign(TObject * Source) {
+	TAglodozaDozSumRecord * Record = (TAglodozaDozSumRecord*) Source;
 
 	ID = Record->ID;
 
@@ -42,14 +42,14 @@ void __fastcall TDozSumRecord::Assign(TObject * Source) {
 	DateTime = Record->DateTime;
 
 	// TODO :
-	throw EMethodNotFound("TDozSumRecord::Assign");
+	throw EMethodNotFound("TAglodozaDozSumRecord::Assign");
 }
 
 // ---------------------------------------------------------------------------
-String __fastcall TDozSumRecord::ToString() {
+String __fastcall TAglodozaDozSumRecord::ToString() {
 	String S;
 
-	S = "TDozSumRecord{";
+	S = "TAglodozaDozSumRecord{";
 	S += "ID='" + IntToStr(ID) + "'";
 	S += ",";
 	S += "Line='" + IntToStr(Line) + "'";
@@ -59,7 +59,7 @@ String __fastcall TDozSumRecord::ToString() {
 
 	S += "DozatorSum=";
 	S += "{";
-	for (int i = 1; i <= DOZATOR_COUNT; i++) {
+	for (int i = 1; i <= AGLODOZA_DOZATOR_COUNT; i++) {
 		S += FloatToStr(DozatorSum[i]) + "|";
 	}
 	S += "}";
@@ -67,7 +67,7 @@ String __fastcall TDozSumRecord::ToString() {
 
 	S += "DozatorProd=";
 	S += "{";
-	for (int i = 1; i <= DOZATOR_COUNT; i++) {
+	for (int i = 1; i <= AGLODOZA_DOZATOR_COUNT; i++) {
 		S += FloatToStr(DozatorProd[i]) + "|";
 	}
 	S += "}";
@@ -75,7 +75,7 @@ String __fastcall TDozSumRecord::ToString() {
 
 	S += "DozatorGroup=";
 	S += "{";
-	for (int i = 1; i <= DOZATOR_COUNT; i++) {
+	for (int i = 1; i <= AGLODOZA_DOZATOR_COUNT; i++) {
 		S += FloatToStr(DozatorGroup[i]) + "|";
 	}
 	S += "}";
@@ -86,8 +86,8 @@ String __fastcall TDozSumRecord::ToString() {
 }
 
 // ---------------------------------------------------------------------------
-float __fastcall TDozSumRecord::GetDozatorSum(int Index) {
-	if (Index >= 1 && Index <= DOZATOR_COUNT) {
+float __fastcall TAglodozaDozSumRecord::GetDozatorSum(int Index) {
+	if (Index >= 1 && Index <= AGLODOZA_DOZATOR_COUNT) {
 		return FDozatorSum[Index];
 	}
 
@@ -96,8 +96,8 @@ float __fastcall TDozSumRecord::GetDozatorSum(int Index) {
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TDozSumRecord::SetDozatorSum(int Index, float Value) {
-	if (Index >= 1 && Index <= DOZATOR_COUNT) {
+void __fastcall TAglodozaDozSumRecord::SetDozatorSum(int Index, float Value) {
+	if (Index >= 1 && Index <= AGLODOZA_DOZATOR_COUNT) {
 		FDozatorSum[Index] = Value;
 
 		return;
@@ -108,8 +108,8 @@ void __fastcall TDozSumRecord::SetDozatorSum(int Index, float Value) {
 }
 
 // ---------------------------------------------------------------------------
-float __fastcall TDozSumRecord::GetDozatorProd(int Index) {
-	if (Index >= 1 && Index <= DOZATOR_COUNT) {
+float __fastcall TAglodozaDozSumRecord::GetDozatorProd(int Index) {
+	if (Index >= 1 && Index <= AGLODOZA_DOZATOR_COUNT) {
 		return FDozatorProd[Index];
 	}
 
@@ -118,8 +118,8 @@ float __fastcall TDozSumRecord::GetDozatorProd(int Index) {
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TDozSumRecord::SetDozatorProd(int Index, float Value) {
-	if (Index >= 1 && Index <= DOZATOR_COUNT) {
+void __fastcall TAglodozaDozSumRecord::SetDozatorProd(int Index, float Value) {
+	if (Index >= 1 && Index <= AGLODOZA_DOZATOR_COUNT) {
 		FDozatorProd[Index] = Value;
 
 		return;
@@ -130,8 +130,8 @@ void __fastcall TDozSumRecord::SetDozatorProd(int Index, float Value) {
 }
 
 // ---------------------------------------------------------------------------
-float __fastcall TDozSumRecord::GetDozatorGroup(int Index) {
-	if (Index >= 1 && Index <= DOZATOR_COUNT) {
+float __fastcall TAglodozaDozSumRecord::GetDozatorGroup(int Index) {
+	if (Index >= 1 && Index <= AGLODOZA_DOZATOR_COUNT) {
 		return FDozatorGroup[Index];
 	}
 
@@ -140,8 +140,8 @@ float __fastcall TDozSumRecord::GetDozatorGroup(int Index) {
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TDozSumRecord::SetDozatorGroup(int Index, float Value) {
-	if (Index >= 1 && Index <= DOZATOR_COUNT) {
+void __fastcall TAglodozaDozSumRecord::SetDozatorGroup(int Index, float Value) {
+	if (Index >= 1 && Index <= AGLODOZA_DOZATOR_COUNT) {
 		FDozatorGroup[Index] = Value;
 
 		return;

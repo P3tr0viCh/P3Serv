@@ -1,25 +1,25 @@
 // ---------------------------------------------------------------------------
 
-#ifndef P3ServTGroupSumRecordH
-#define P3ServTGroupSumRecordH
+#ifndef P3ServTAglodozaGroupSumRecordH
+#define P3ServTAglodozaGroupSumRecordH
 
 #include <System.Classes.hpp>
 
 #include <ObjList.h>
 
-#include "P3ServTLocalRecord.h"
+#include "P3ServTAglodozaRecord.h"
 
-const GROUPS_COUNT = 20;
+const AGLODOZA_GROUPS_COUNT = 20;
 
 // ---------------------------------------------------------------------------
-class TGroupSumRecord : public TLocalRecord {
+class TAglodozaGroupSumRecord : public TAglodozaRecord {
 private:
 	char FLine;
 
 	TDateTime FDateTime;
 
-	float FGroupId[GROUPS_COUNT];
-	float FGroupSum[GROUPS_COUNT];
+	float FGroupId[AGLODOZA_GROUPS_COUNT];
+	float FGroupSum[AGLODOZA_GROUPS_COUNT];
 
 	float __fastcall GetGroupId(int Index);
 	void __fastcall SetGroupId(int Index, float Value);
@@ -42,7 +42,7 @@ public:
 };
 
 // ---------------------------------------------------------------------------
-typedef TObjList<TGroupSumRecord>TGroupSumRecordList;
+typedef TObjList<TAglodozaGroupSumRecord>TAglodozaGroupSumRecordList;
 
 // ---------------------------------------------------------------------------
 #endif

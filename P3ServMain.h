@@ -12,6 +12,7 @@
 #include <Vcl.AppEvnts.hpp>
 
 #include "P3ServTSettings.h"
+#include <Vcl.Samples.Spin.hpp>
 
 // ---------------------------------------------------------------------------
 class TMain : public TForm {
@@ -26,6 +27,7 @@ __published:
 	TMenuItem *miClose;
 	TTrayIcon *TrayIcon;
 	TApplicationEvents *ApplicationEvents;
+	TTimer *Timer;
 
 	void __fastcall miCheckClick(TObject *Sender);
 	void __fastcall miOptionsClick(TObject *Sender);
@@ -35,6 +37,7 @@ __published:
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall TrayIconClick(TObject *Sender);
 	void __fastcall ApplicationEventsException(TObject *Sender, Exception *E);
+	void __fastcall TimerTimer(TObject *Sender);
 
 private:
 	enum TTrayIconMenuItem {
@@ -45,6 +48,7 @@ private:
 
 	void TrayIconMenuClick(TTrayIconMenuItem TrayIconMenuItem);
 
+	void TimerSetEnabled(bool Enabled);
 	void PopupMenuSetEnabled(bool Enabled);
 
 	void MainFunction();

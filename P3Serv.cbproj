@@ -56,7 +56,7 @@
         <ProjectType>CppVCLApplication</ProjectType>
         <PackageImports>CloudService;DataSnapFireDAC;emsclient;emsclientfiredac;FireDAC;FireDACCommon;FireDACCommonDriver;FireDACIBDriver;FireDACSqliteDriver;inet;RESTBackendComponents;RESTComponents;soapmidas;soaprtl;soapserver;$(PackageImports)</PackageImports>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
-        <AllPackageLibs>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib</AllPackageLibs>
+        <AllPackageLibs>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;VclSmp.lib;vclx.lib</AllPackageLibs>
         <_TCHARMapping>wchar_t</_TCHARMapping>
         <Multithreaded>true</Multithreaded>
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
@@ -109,7 +109,7 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <LinkPackageStatics>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib</LinkPackageStatics>
+        <LinkPackageStatics>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;VclSmp.lib;vclx.lib</LinkPackageStatics>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Debug>true</VerInfo_Debug>
         <Icon_MainIcon>P3Serv_Icon.ico</Icon_MainIcon>
@@ -219,6 +219,14 @@
             <DependentOn>P3ServMain.h</DependentOn>
             <BuildOrder>18</BuildOrder>
         </CppCompile>
+        <CppCompile Include="P3ServMainFunctionAglodoza.cpp">
+            <DependentOn>P3ServMainFunctionAglodoza.h</DependentOn>
+            <BuildOrder>34</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="P3ServMainFunctionKoksohim.cpp">
+            <DependentOn>P3ServMainFunctionKoksohim.h</DependentOn>
+            <BuildOrder>33</BuildOrder>
+        </CppCompile>
         <CppCompile Include="P3ServOptions.cpp">
             <Form>frmOptions</Form>
             <FormType>dfm</FormType>
@@ -232,25 +240,25 @@
             <Form>P3ServStrings.res</Form>
             <BuildOrder>23</BuildOrder>
         </ResourceCompile>
-        <CppCompile Include="P3ServTDozSumRecord.cpp">
-            <DependentOn>P3ServTDozSumRecord.h</DependentOn>
-            <BuildOrder>26</BuildOrder>
+        <CppCompile Include="P3ServTAglodozaDozSumRecord.cpp">
+            <DependentOn>P3ServTAglodozaDozSumRecord.h</DependentOn>
+            <BuildOrder>34</BuildOrder>
         </CppCompile>
-        <CppCompile Include="P3ServTGroupsRecord.cpp">
-            <DependentOn>P3ServTGroupsRecord.h</DependentOn>
+        <CppCompile Include="P3ServTAglodozaGroupsRecord.cpp">
+            <DependentOn>P3ServTAglodozaGroupsRecord.h</DependentOn>
             <BuildOrder>28</BuildOrder>
         </CppCompile>
-        <CppCompile Include="P3ServTGroupSumRecord.cpp">
-            <DependentOn>P3ServTGroupSumRecord.h</DependentOn>
+        <CppCompile Include="P3ServTAglodozaGroupSumRecord.cpp">
+            <DependentOn>P3ServTAglodozaGroupSumRecord.h</DependentOn>
             <BuildOrder>27</BuildOrder>
         </CppCompile>
+        <None Include="P3ServTAglodozaRecord.h">
+            <BuildOrder>29</BuildOrder>
+        </None>
         <CppCompile Include="P3ServTKoksohimRecord.cpp">
             <DependentOn>P3ServTKoksohimRecord.h</DependentOn>
             <BuildOrder>32</BuildOrder>
         </CppCompile>
-        <None Include="P3ServTLocalRecord.h">
-            <BuildOrder>29</BuildOrder>
-        </None>
         <CppCompile Include="P3ServTSettings.cpp">
             <DependentOn>P3ServTSettings.h</DependentOn>
             <BuildOrder>24</BuildOrder>

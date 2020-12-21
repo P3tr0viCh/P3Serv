@@ -1,16 +1,16 @@
 // ---------------------------------------------------------------------------
 
-#ifndef P3ServTGroupsRecordH
-#define P3ServTGroupsRecordH
+#ifndef P3ServTAglodozaGroupsRecordH
+#define P3ServTAglodozaGroupsRecordH
 
 #include <System.Classes.hpp>
 
 #include <ObjList.h>
 
-#include "P3ServTLocalRecord.h"
+#include "P3ServTAglodozaRecord.h"
 
 // ---------------------------------------------------------------------------
-class TGroupsRecord : public TLocalRecord {
+class TAglodozaGroupsRecord : public TAglodozaRecord {
 private:
 	String FFullName;
 	String FShortName;
@@ -29,7 +29,7 @@ public:
 };
 
 // ---------------------------------------------------------------------------
-typedef TObjList<TGroupsRecord>TGroupsRecordList;
+typedef TObjList<TAglodozaGroupsRecord>TAglodozaGroupsRecordList;
 
 // ---------------------------------------------------------------------------
 #endif

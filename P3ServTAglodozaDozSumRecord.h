@@ -1,26 +1,26 @@
 // ---------------------------------------------------------------------------
 
-#ifndef P3ServTDozSumRecordH
-#define P3ServTDozSumRecordH
+#ifndef P3ServTAglodozaDozSumRecordH
+#define P3ServTAglodozaDozSumRecordH
 
 #include <System.Classes.hpp>
 
 #include <ObjList.h>
 
-#include "P3ServTLocalRecord.h"
+#include "P3ServTAglodozaRecord.h"
 
-const DOZATOR_COUNT = 19;
+const AGLODOZA_DOZATOR_COUNT = 19;
 
 // ---------------------------------------------------------------------------
-class TDozSumRecord : public TLocalRecord {
+class TAglodozaDozSumRecord : public TAglodozaRecord {
 private:
 	char FLine;
 
 	TDateTime FDateTime;
 
-	float FDozatorSum[DOZATOR_COUNT];
-	float FDozatorProd[DOZATOR_COUNT];
-	float FDozatorGroup[DOZATOR_COUNT];
+	float FDozatorSum[AGLODOZA_DOZATOR_COUNT];
+	float FDozatorProd[AGLODOZA_DOZATOR_COUNT];
+	float FDozatorGroup[AGLODOZA_DOZATOR_COUNT];
 
 	float __fastcall GetDozatorSum(int Index);
 	void __fastcall SetDozatorSum(int Index, float Value);
@@ -47,7 +47,7 @@ public:
 };
 
 // ---------------------------------------------------------------------------
-typedef TObjList<TDozSumRecord>TDozSumRecordList;
+typedef TObjList<TAglodozaDozSumRecord>TAglodozaDozSumRecordList;
 
 // ---------------------------------------------------------------------------
 #endif

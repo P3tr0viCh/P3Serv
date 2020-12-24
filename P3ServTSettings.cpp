@@ -30,6 +30,9 @@ __fastcall TSettings::TSettings() {
 
 	FProgramMode = pmUnknown;
 
+	FTimerPeriod = tpOff;
+	FTimerPeriodStart = 0;
+
 	FMySQLHost = "";
 	FMySQLPort = "3306";
 	FMySQLDatabase = "wdb3";
@@ -66,7 +69,13 @@ bool __fastcall TSettings::Equals(TObject * Obj) {
 
 	if (Settings->OptionsPass != OptionsPass)
 		return false;
+
 	if (Settings->ProgramMode != ProgramMode)
+		return false;
+
+	if (Settings->TimerPeriod != TimerPeriod)
+		return false;
+	if (Settings->TimerPeriodStart != TimerPeriodStart)
 		return false;
 
 	if (Settings->MySQLHost != MySQLHost)
@@ -109,7 +118,11 @@ bool __fastcall TSettings::Equals(TObject * Obj) {
 // ---------------------------------------------------------------------------
 void __fastcall TSettings::Assign(TSettings * Source) {
 	FOptionsPass = Source->OptionsPass;
+
 	FProgramMode = Source->ProgramMode;
+
+	FTimerPeriod = Source->TimerPeriod;
+	FTimerPeriodStart = Source->TimerPeriodStart;
 
 	FMySQLHost = Source->MySQLHost;
 	FMySQLPort = Source->MySQLPort;
@@ -242,7 +255,7 @@ void TSettings::CheckCRC(String S) {
 	S = Decrypt(S);
 
 	String RightCRC = ToString();
-//	WriteToLog(RightCRC);
+	// WriteToLog(RightCRC);
 	RightCRC = CRC(RightCRC);
 
 	if (!SameStr(S, RightCRC)) {
@@ -260,7 +273,9 @@ void TSettings::LoadSettings() {
 		Section = "Main";
 		OptionsPass = Decrypt(IniFile->ReadString(Section, "OptionsPass",
 			OptionsPass));
-		ProgramMode = IniFile->ReadInteger(Section, "ProgramMode", ProgramMode);
+
+		ProgramMode = (TProgramMode)IniFile->ReadInteger(Section, "ProgramMode",
+			ProgramMode);
 
 		Section = "ScaleInfo";
 		AglodozaScaleNum = IniFile->ReadInteger(Section, "AglodozaNum",

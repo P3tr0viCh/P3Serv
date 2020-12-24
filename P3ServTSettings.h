@@ -14,6 +14,12 @@ enum TProgramMode {
 };
 
 // ---------------------------------------------------------------------------
+enum TTimerPeriod {
+	tpOff = 0, tp1 = 1, tp5 = 5, tp10 = 10, tp15 = 15, tp20 = 20, tp30 = 30,
+	tp60 = 60
+};
+
+// ---------------------------------------------------------------------------
 class TSettings : public TObject {
 private:
 	String FConfigFileName;
@@ -21,6 +27,9 @@ private:
 	String FOptionsPass;
 
 	TProgramMode FProgramMode;
+
+	TTimerPeriod FTimerPeriod;
+	int FTimerPeriodStart;
 
 	// MySQL
 	String FMySQLHost;
@@ -73,6 +82,11 @@ public:
 
 	__property TProgramMode ProgramMode = {
 		read = FProgramMode, write = FProgramMode};
+
+	__property TTimerPeriod TimerPeriod = {
+		read = FTimerPeriod, write = FTimerPeriod};
+	__property int TimerPeriodStart = {
+		read = FTimerPeriodStart, write = FTimerPeriodStart};
 
 	__property String MySQLHost = {read = FMySQLHost, write = FMySQLHost};
 	__property String MySQLPort = {read = FMySQLPort, write = FMySQLPort};

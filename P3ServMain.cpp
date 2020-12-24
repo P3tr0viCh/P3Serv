@@ -54,6 +54,9 @@ void __fastcall TMain::FormCreate(TObject *Sender) {
 		return;
 	}
 
+	Settings->TimerPeriod = tp5;
+	Settings->TimerPeriodStart = 3;
+
 	MainFunction();
 }
 
@@ -119,45 +122,40 @@ void TMain::TrayIconMenuClick(TTrayIconMenuItem TrayIconMenuItem) {
 }
 
 // ---------------------------------------------------------------------------
-enum TTimerPeriod {
-	tpOff = 0, tp1 = 1, tp5 = 5, tp10 = 10, tp15 = 15, tp20 = 20, tp30 = 30,
-	tp60 = 60
-};
-
-// ---------------------------------------------------------------------------
 void TMain::TimerSetEnabled(bool Enabled) {
-	// TODO
-	TTimerPeriod SettingsTimerPeriod = tp30;
-
 	if (Enabled) {
-		if (SettingsTimerPeriod == tpOff) {
+		if (Settings->TimerPeriod == tpOff) {
 			Timer->Enabled = false;
 			return;
 		}
 
-		int P = SettingsTimerPeriod;
-		int C = 59 / P;
+		int P = Settings->TimerPeriod;
+		int C = 60 / P;
 
 		int T = 0;
 
-		for (int m = 0; m < 60; m++) {
+		GetSystemTime(&SystemTime);
 
-			for (int i = 1; i <= C; i++) {
-				T = P * i;
-				if (m < T) {
-					break;
-				}
+		int m = SystemTime.wMinute;
+
+		for (int i = 1; i <= C + 1; i++) {
+			T = P * i;
+			if (m < T) {
+				break;
 			}
-
-			if (m >= T) {
-				T = 0;
-			}
-
-			WriteToLog(IntToStr(m) + "=" + IntToStr(T));
 		}
 
-		// TODO
-		Timer->Enabled = false;
+		if (T >= 60) {
+			T = 0;
+		}
+
+		T = T + Settings->TimerPeriodStart;
+
+		TimeToWork = T;
+
+		WriteToLog("next min: " + IntToStr(TimeToWork));
+
+		Timer->Enabled = true;
 	}
 	else {
 		Timer->Enabled = false;
@@ -233,7 +231,18 @@ void TMain::MainFunction() {
 
 // ---------------------------------------------------------------------------
 void __fastcall TMain::TimerTimer(TObject *Sender) {
-	MainFunction();
+	GetSystemTime(&SystemTime);
+
+	if (SystemTime.wMinute >= TimeToWork) {
+		if (DoWork) {
+			DoWork = false;
+
+			MainFunction();
+		}
+	}
+	else {
+		DoWork = true;
+	}
 }
 
 // ---------------------------------------------------------------------------

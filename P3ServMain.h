@@ -44,6 +44,11 @@ private:
 		tmCheck, tmOptions, tmAbout, tmClose
 	};
 
+	TSystemTime SystemTime;
+
+	int TimeToWork;
+	bool DoWork;
+
 	TSettings * FSettings;
 
 	void TrayIconMenuClick(TTrayIconMenuItem TrayIconMenuItem);

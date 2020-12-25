@@ -4,7 +4,7 @@ object frmOptions: TfrmOptions
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
-  ClientHeight = 352
+  ClientHeight = 376
   ClientWidth = 464
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,49 +18,44 @@ object frmOptions: TfrmOptions
   OnDestroy = FormDestroy
   DesignSize = (
     464
-    352)
+    376)
   PixelsPerInch = 96
   TextHeight = 21
   object btnOk: TButton
     Left = 258
-    Top = 312
+    Top = 336
     Width = 96
     Height = 32
     Anchors = [akRight, akBottom]
     Caption = 'OK'
     Default = True
-    TabOrder = 0
+    TabOrder = 1
     OnClick = btnOkClick
-    ExplicitLeft = 232
-    ExplicitTop = 329
+    ExplicitTop = 312
   end
   object btnCancel: TButton
     Left = 360
-    Top = 312
+    Top = 336
     Width = 96
     Height = 32
     Anchors = [akRight, akBottom]
     Cancel = True
     Caption = #1054#1090#1084#1077#1085#1072
     ModalResult = 2
-    TabOrder = 1
-    ExplicitLeft = 334
-    ExplicitTop = 329
+    TabOrder = 2
+    ExplicitTop = 312
   end
   object PageControl: TPageControl
     Left = 8
     Top = 8
     Width = 450
-    Height = 294
-    ActivePage = tsDomna
+    Height = 320
+    ActivePage = tsMain
     MultiLine = True
-    TabOrder = 2
+    TabOrder = 0
     object tsMain: TTabSheet
       Caption = #1055#1088#1086#1075#1088#1072#1084#1084#1072
-      ExplicitLeft = 0
-      ExplicitTop = 32
-      ExplicitWidth = 441
-      ExplicitHeight = 0
+      ExplicitHeight = 232
       object gbOptions: TGroupBox
         Left = 8
         Top = 8
@@ -95,7 +90,7 @@ object frmOptions: TfrmOptions
         Left = 8
         Top = 96
         Width = 208
-        Height = 128
+        Height = 154
         Caption = #1058#1080#1087' '#1084#1086#1076#1091#1083#1103
         Items.Strings = (
           #1040#1075#1083#1086#1076#1086#1079#1080#1088#1086#1074#1082#1072
@@ -103,14 +98,53 @@ object frmOptions: TfrmOptions
           #1044#1086#1084#1077#1085#1085#1072#1103' '#1087#1077#1095#1100)
         TabOrder = 1
       end
+      object gbTimer: TGroupBox
+        Left = 224
+        Top = 96
+        Width = 208
+        Height = 154
+        Caption = #1058#1072#1081#1084#1077#1088' '#1086#1090#1087#1088#1072#1074#1082#1080
+        TabOrder = 2
+        object lblTimerPeriodStart: TLabel
+          Left = 8
+          Top = 88
+          Width = 112
+          Height = 21
+          Caption = #1053#1072#1095#1072#1083#1086' '#1086#1090#1089#1095#1105#1090#1072
+          FocusControl = seTimerPeriodStart
+        end
+        object lblTimerPeriod: TLabel
+          Left = 8
+          Top = 24
+          Width = 113
+          Height = 21
+          Caption = #1055#1077#1088#1080#1086#1076#1080#1095#1085#1086#1089#1090#1100
+          FocusControl = cboxTimerPeriod
+        end
+        object cboxTimerPeriod: TComboBox
+          Left = 8
+          Top = 48
+          Width = 192
+          Height = 29
+          Style = csDropDownList
+          TabOrder = 0
+        end
+        object seTimerPeriodStart: TSpinEdit
+          Left = 8
+          Top = 112
+          Width = 192
+          Height = 31
+          MaxValue = 59
+          MinValue = 0
+          TabOrder = 1
+          Value = 0
+        end
+      end
     end
     object tsMySQL: TTabSheet
       Caption = 'MySQL'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 32
-      ExplicitWidth = 441
-      ExplicitHeight = 0
+      ExplicitHeight = 232
       object gbMySQL: TGroupBox
         Left = 8
         Top = 8
@@ -163,10 +197,7 @@ object frmOptions: TfrmOptions
     object tsAglodoza: TTabSheet
       Caption = #1040#1075#1083#1086#1076#1086#1079#1080#1088#1086#1074#1082#1072
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 32
-      ExplicitWidth = 441
-      ExplicitHeight = 0
+      ExplicitHeight = 232
       object eAglodozaScaleNum: TLabeledEdit
         Left = 8
         Top = 32
@@ -209,10 +240,7 @@ object frmOptions: TfrmOptions
     object tsKoksohim: TTabSheet
       Caption = #1044#1086#1079#1072#1090#1086#1088#1099' '#1050#1061#1055
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 32
-      ExplicitWidth = 441
-      ExplicitHeight = 0
+      ExplicitHeight = 232
       object eKoksohimScaleNum: TLabeledEdit
         Left = 8
         Top = 32
@@ -239,7 +267,7 @@ object frmOptions: TfrmOptions
         Width = 96
         Height = 32
         Caption = #1055#1088#1086#1074#1077#1088#1082#1072
-        TabOrder = 2
+        TabOrder = 3
         OnClick = btnCheckMySQLClick
       end
       object btnKoksohimDatabase: TButton
@@ -248,17 +276,14 @@ object frmOptions: TfrmOptions
         Width = 30
         Height = 29
         Caption = '...'
-        TabOrder = 3
+        TabOrder = 2
         OnClick = btnAglodozaDatabaseClick
       end
     end
     object tsDomna: TTabSheet
       Caption = #1044#1086#1084#1077#1085#1085#1072#1103' '#1087#1077#1095#1100
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 441
-      ExplicitHeight = 206
+      ExplicitHeight = 232
       object eDomnaScaleNum: TLabeledEdit
         Left = 8
         Top = 32
@@ -285,7 +310,7 @@ object frmOptions: TfrmOptions
         Width = 96
         Height = 32
         Caption = #1055#1088#1086#1074#1077#1088#1082#1072
-        TabOrder = 2
+        TabOrder = 3
         OnClick = btnCheckMySQLClick
       end
       object btnDomnaDatabase: TButton
@@ -294,7 +319,7 @@ object frmOptions: TfrmOptions
         Width = 30
         Height = 29
         Caption = '...'
-        TabOrder = 3
+        TabOrder = 2
         OnClick = btnAglodozaDatabaseClick
       end
     end
@@ -305,7 +330,7 @@ object frmOptions: TfrmOptions
       #1041#1072#1079#1072' '#1076#1072#1085#1085#1099#1093'|*.mdb;*.dbf|'#1041#1072#1079#1072' '#1076#1072#1085#1085#1099#1093' Microsoft Access|*.mdb|'#1041#1072#1079#1072' ' +
       #1076#1072#1085#1085#1099#1093' DBF|*.dbf|'#1042#1089#1077' '#1092#1072#1081#1083#1099'|*.*'
     Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing, ofDontAddToRecent]
-    Left = 334
-    Top = 214
+    Left = 150
+    Top = 262
   end
 end

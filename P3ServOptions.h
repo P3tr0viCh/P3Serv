@@ -12,6 +12,7 @@
 #include <Vcl.ComCtrls.hpp>
 
 #include "P3ServTSettings.h"
+#include <Vcl.Samples.Spin.hpp>
 
 // ---------------------------------------------------------------------------
 class TfrmOptions : public TForm {
@@ -46,6 +47,11 @@ __published:
 	TLabeledEdit *eDomnaDatabase;
 	TButton *btnCheckDomna;
 	TButton *btnDomnaDatabase;
+	TGroupBox *gbTimer;
+	TComboBox *cboxTimerPeriod;
+	TSpinEdit *seTimerPeriodStart;
+	TLabel *lblTimerPeriodStart;
+	TLabel *lblTimerPeriod;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall btnOkClick(TObject *Sender);

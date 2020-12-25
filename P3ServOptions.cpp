@@ -57,6 +57,16 @@ void __fastcall TfrmOptions::FormCreate(TObject *Sender) {
 	btnAglodozaDatabase->Tag = pmAglodoza;
 	btnKoksohimDatabase->Tag = pmKoksohim;
 	btnDomnaDatabase->Tag = pmDomna;
+
+	cboxTimerPeriod->Items->AddObject("Отключено", (TObject*)0);
+	cboxTimerPeriod->Items->AddObject("Ежеминутно", (TObject*)1);
+	cboxTimerPeriod->Items->AddObject("5 минут", (TObject*)5);
+	cboxTimerPeriod->Items->AddObject("10 минут", (TObject*)10);
+	cboxTimerPeriod->Items->AddObject("15 минут", (TObject*)15);
+	cboxTimerPeriod->Items->AddObject("20 минут", (TObject*)20);
+	cboxTimerPeriod->Items->AddObject("Полчаса", (TObject*)30);
+	cboxTimerPeriod->Items->AddObject("Ежечасно", (TObject*)60);
+	cboxTimerPeriod->DropDownCount = 8;
 }
 
 // ---------------------------------------------------------------------------
@@ -70,6 +80,14 @@ void TfrmOptions::UpdateForm() {
 	eOptionsPass2->Text = Settings->OptionsPass;
 
 	rgProgramMode->ItemIndex = Settings->ProgramMode - 1;
+
+	for (int i = 0; i < cboxTimerPeriod->Items->Count; i++) {
+		if ((int)cboxTimerPeriod->Items->Objects[i] == Settings->TimerPeriod) {
+			cboxTimerPeriod->ItemIndex = i;
+			break;
+		}
+	}
+	seTimerPeriodStart->Value = Settings->TimerPeriodStart;
 
 	eMySQLHost->Text = Settings->MySQLHost;
 	eMySQLUser->Text = Settings->MySQLUser;
@@ -90,6 +108,9 @@ void TfrmOptions::UpdateSettings() {
 	Settings->OptionsPass = eOptionsPass->Text;
 
 	Settings->ProgramMode = TProgramMode(rgProgramMode->ItemIndex + 1);
+
+	Settings->TimerPeriod = (int)cboxTimerPeriod->Items->Objects[cboxTimerPeriod->ItemIndex];
+	Settings->TimerPeriodStart = seTimerPeriodStart->Value;
 
 	Settings->MySQLHost = eMySQLHost->Text;
 	Settings->MySQLUser = eMySQLUser->Text;

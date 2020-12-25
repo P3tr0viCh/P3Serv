@@ -30,7 +30,7 @@ __fastcall TSettings::TSettings() {
 
 	FProgramMode = pmUnknown;
 
-	FTimerPeriod = tpOff;
+	FTimerPeriod = 0;
 	FTimerPeriodStart = 0;
 
 	FMySQLHost = "";
@@ -153,6 +153,10 @@ String __fastcall TSettings::ToString() {
 	S += ",";
 	S += "ProgramMode='" + IntToStr(ProgramMode) + "'";
 	S += ",";
+	S += "TimerPeriod='" + IntToStr(TimerPeriod) + "'";
+	S += ",";
+	S += "TimerPeriodStart='" + IntToStr(TimerPeriodStart) + "'";
+	S += ",";
 
 	S += "MySQLHost='" + MySQLHost + "'";
 	S += ",";
@@ -273,9 +277,11 @@ void TSettings::LoadSettings() {
 		Section = "Main";
 		OptionsPass = Decrypt(IniFile->ReadString(Section, "OptionsPass",
 			OptionsPass));
-
 		ProgramMode = (TProgramMode)IniFile->ReadInteger(Section, "ProgramMode",
 			ProgramMode);
+		TimerPeriod = IniFile->ReadInteger(Section, "TimerPeriod", TimerPeriod);
+		TimerPeriodStart = IniFile->ReadInteger(Section, "TimerPeriodStart",
+			TimerPeriodStart);
 
 		Section = "ScaleInfo";
 		AglodozaScaleNum = IniFile->ReadInteger(Section, "AglodozaNum",
@@ -327,6 +333,8 @@ void TSettings::SaveSettings() {
 		Section = "Main";
 		IniFile->WriteString(Section, "OptionsPass", Encrypt(OptionsPass));
 		IniFile->WriteInteger(Section, "ProgramMode", ProgramMode);
+		IniFile->WriteInteger(Section, "TimerPeriod", TimerPeriod);
+		IniFile->WriteInteger(Section, "TimerPeriodStart", TimerPeriodStart);
 
 		Section = "ScaleInfo";
 		IniFile->WriteString(Section, "AglodozaNum", AglodozaScaleNum);

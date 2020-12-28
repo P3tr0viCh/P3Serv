@@ -12,7 +12,6 @@
 #include <Vcl.AppEvnts.hpp>
 
 #include "P3ServTSettings.h"
-#include <Vcl.Samples.Spin.hpp>
 
 // ---------------------------------------------------------------------------
 class TMain : public TForm {
@@ -44,10 +43,7 @@ private:
 		tmCheck, tmOptions, tmAbout, tmClose
 	};
 
-	TSystemTime SystemTime;
-
-	int TimeToWork;
-	bool DoWork;
+	TDateTime TimeToWork;
 
 	TSettings * FSettings;
 

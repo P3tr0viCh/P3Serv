@@ -3,6 +3,8 @@
 #include <vcl.h>
 #pragma hdrstop
 
+#include <DateUtils.hpp>
+
 #include <AboutFrm.h>
 
 #include <UtilsLog.h>
@@ -106,10 +108,12 @@ void TMain::TrayIconMenuClick(TTrayIconMenuItem TrayIconMenuItem) {
 			break;
 		case tmClose:
 		default:
+			miClose->Enabled = false;
 #ifndef FORCECLOSE
 			if (MsgBoxYesNo(IDS_QUESTION_CLOSE_PROGRAM))
 #endif
 				Application->Terminate();
+			miClose->Enabled = true;
 		}
 	}
 	__finally {
@@ -120,6 +124,10 @@ void TMain::TrayIconMenuClick(TTrayIconMenuItem TrayIconMenuItem) {
 
 // ---------------------------------------------------------------------------
 void TMain::TimerSetEnabled(bool Enabled) {
+	if (CheckExit()) {
+		return;
+	}
+
 	if (Enabled) {
 		if (Settings->TimerPeriod == 0) {
 			Timer->Enabled = false;
@@ -127,40 +135,59 @@ void TMain::TimerSetEnabled(bool Enabled) {
 		}
 
 		int P = Settings->TimerPeriod;
-		int C = 60 / P;
+		int C = MinsPerHour / P;
 
-		int T = 0;
+		TimeToWork = Now();
 
-		GetSystemTime(&SystemTime);
+		bool NextHour = false;
+		int NextMin = 0;
+		int CurrentMin = MinuteOf(TimeToWork);
 
-		int m = SystemTime.wMinute;
-
-		if (Settings->TimerPeriodStart > Settings->TimerPeriod && m <
+		if (Settings->TimerPeriodStart > Settings->TimerPeriod && CurrentMin <
 			Settings->TimerPeriodStart - Settings->TimerPeriod) {
-			T = Settings->TimerPeriodStart - Settings->TimerPeriod;
+			NextMin = Settings->TimerPeriodStart - Settings->TimerPeriod;
 		}
 		else {
 			for (int i = 0; i <= C; i++) {
-				T = P * i + Settings->TimerPeriodStart;
+				NextMin = P * i + Settings->TimerPeriodStart;
 
-				if (m < T) {
+				if (CurrentMin < NextMin) {
 					break;
 				}
 			}
 
-			if (T >= 60) {
-				T = T - 60;
+			if (NextMin >= MinsPerHour) {
+				NextMin = NextMin - MinsPerHour;
+
+				NextHour = true;
 			}
 		}
 
-		TimeToWork = T;
+		Word Hour, Min, Sec, MSec;
 
-		WriteToLog("next min: " + IntToStr(TimeToWork));
+		DecodeTime(TimeToWork, Hour, Min, Sec, MSec);
+
+		Min = NextMin;
+
+		ReplaceTime(TimeToWork, EncodeTime(Hour, Min, 0, 0));
+
+		if (NextHour) {
+			TimeToWork = IncHour(TimeToWork);
+		}
+
+		WriteToLog("next work: " + DateTimeToStr(TimeToWork));
 
 		Timer->Enabled = true;
 	}
 	else {
 		Timer->Enabled = false;
+	}
+}
+
+// ---------------------------------------------------------------------------
+void __fastcall TMain::TimerTimer(TObject *Sender) {
+	if (Now() >= TimeToWork) {
+		TrayIconMenuClick(tmCheck);
 	}
 }
 
@@ -201,8 +228,6 @@ void TMain::MainFunction() {
 	TrayIcon->Hint = LoadStr(IDS_APP_WORK_IN_PROGRESS);
 	TrayIconLoadFromResourceName(TrayIcon, "R_ICON_PROGRESS");
 
-	TimerSetEnabled(false);
-
 	try {
 		try {
 			switch (Settings->ProgramMode) {
@@ -224,26 +249,8 @@ void TMain::MainFunction() {
 		}
 	}
 	__finally {
-		TimerSetEnabled(true);
-
 		TrayIconLoadFromResourceName(TrayIcon, "MAINICON");
 		TrayIcon->Hint = LoadStr(IDS_APP_TITLE);
-	}
-}
-
-// ---------------------------------------------------------------------------
-void __fastcall TMain::TimerTimer(TObject *Sender) {
-	GetSystemTime(&SystemTime);
-
-	if (SystemTime.wMinute >= TimeToWork) {
-		if (DoWork) {
-			DoWork = false;
-
-			MainFunction();
-		}
-	}
-	else {
-		DoWork = true;
 	}
 }
 

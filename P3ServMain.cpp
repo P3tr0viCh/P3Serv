@@ -20,6 +20,7 @@
 #include "P3ServStrings.h"
 
 #include "P3ServMainFunctionAglodoza.h"
+#include "P3ServMainFunctionDomna.h"
 #include "P3ServMainFunctionKoksohim.h"
 
 #include "P3ServLogin.h"
@@ -56,7 +57,7 @@ void __fastcall TMain::FormCreate(TObject *Sender) {
 		return;
 	}
 
-	MainFunction();
+	TrayIconMenuClick(tmCheck);
 }
 
 // ---------------------------------------------------------------------------
@@ -112,7 +113,10 @@ void TMain::TrayIconMenuClick(TTrayIconMenuItem TrayIconMenuItem) {
 #ifndef FORCECLOSE
 			if (MsgBoxYesNo(IDS_QUESTION_CLOSE_PROGRAM))
 #endif
+			{
 				Application->Terminate();
+				ProcMess();
+			}
 			miClose->Enabled = true;
 		}
 	}
@@ -175,7 +179,7 @@ void TMain::TimerSetEnabled(bool Enabled) {
 			TimeToWork = IncHour(TimeToWork);
 		}
 
-		WriteToLog("next work: " + DateTimeToStr(TimeToWork));
+		// WriteToLog("next work: " + DateTimeToStr(TimeToWork));
 
 		Timer->Enabled = true;
 	}
@@ -224,6 +228,11 @@ void __fastcall TMain::TrayIconClick(TObject *Sender) {
 }
 
 // ---------------------------------------------------------------------------
+void __fastcall TMain::TrayIconDblClick(TObject *Sender) {
+	TrayIconMenuClick(tmCheck);
+}
+
+// ---------------------------------------------------------------------------
 void TMain::MainFunction() {
 	TrayIcon->Hint = LoadStr(IDS_APP_WORK_IN_PROGRESS);
 	TrayIconLoadFromResourceName(TrayIcon, "R_ICON_PROGRESS");
@@ -238,8 +247,8 @@ void TMain::MainFunction() {
 				MainFunctionKoksohim(Settings);
 				break;
 			case pmDomna:
-				throw Exception("TODO: domna");
-				// break;
+				MainFunctionDomna(Settings);
+				break;
 			default:
 				throw Exception("check settings");
 			}

@@ -37,6 +37,7 @@ __published:
 	void __fastcall TrayIconClick(TObject *Sender);
 	void __fastcall ApplicationEventsException(TObject *Sender, Exception *E);
 	void __fastcall TimerTimer(TObject *Sender);
+	void __fastcall TrayIconDblClick(TObject *Sender);
 
 private:
 	enum TTrayIconMenuItem {

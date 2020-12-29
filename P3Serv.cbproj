@@ -65,8 +65,8 @@
         <SanitizedProjectName>P3Serv</SanitizedProjectName>
         <VerInfo_Locale>1049</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=П3тр0виЧъ;FileDescription=Передача данных с КХП (ПО Электротехсервис) на ИСВС;FileVersion=1.0.0.0;InternalName=KHPServ;LegalCopyright=© П3тр0виЧъ;LegalTrademarks=П3тр0виЧъ;OriginalFilename=KHPServ.exe;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Передача данных на ИСВС;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <IncludePath>..\P3Serv\;..\!UtilsAndComps\;..\CryptoPP\cryptopp700;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\P3Serv\;..\!UtilsAndComps\;..\CryptoPP;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>mainfunctions\;records\;..\P3Serv\;..\!UtilsAndComps\;..\CryptoPP\cryptopp700;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>mainfunctions\;records\;..\P3Serv\;..\!UtilsAndComps\;..\CryptoPP;$(ILINK_LibraryPath)</ILINK_LibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <PackageImports>adortl;appanalytics;bcbie;bcbsmp;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindengine;CustomIPTransport;DataSnapClient;DataSnapCommon;DataSnapConnectors;DatasnapConnectorsFreePascal;DataSnapIndy10ServerTransport;DataSnapNativeClient;DataSnapProviderClient;DataSnapServer;DataSnapServerMidas;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXDb2Driver;DBXFirebirdDriver;DBXInformixDriver;DBXInterBaseDriver;DBXMSSQLDriver;DBXMySQLDriver;DBXOdbcDriver;DBXOracleDriver;DBXSqliteDriver;DBXSybaseASADriver;DBXSybaseASEDriver;dsnap;dsnapcon;dsnapxml;emsedge;emshosting;FireDACADSDriver;FireDACASADriver;FireDACCommonODBC;FireDACDb2Driver;FireDACDBXDriver;FireDACDSDriver;FireDACInfxDriver;FireDACMongoDBDriver;FireDACMSAccDriver;FireDACMSSQLDriver;FireDACMySQLDriver;FireDACODBCDriver;FireDACOracleDriver;FireDACPgDriver;FireDACTDataDriver;fmx;fmxase;fmxdae;fmxFireDAC;fmxobj;FMXTee;FmxTeeUI;ibmonitor;ibxbindings;ibxpress;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inetdb;inetdbxpress;Intraweb;rtl;svn;Tee;TeeDB;TeeUI;tethering;vcl;vclactnband;vcldb;vcldsnap;vclFireDAC;vclib;vclie;vclimg;VCLRESTComponents;VclSmp;vcltouch;vclwinx;vclx;xmlrtl;$(PackageImports)</PackageImports>
@@ -194,6 +194,18 @@
             <DependentOn>..\!UtilsAndComps\UtilsStr.h</DependentOn>
             <BuildOrder>17</BuildOrder>
         </CppCompile>
+        <CppCompile Include="mainfunctions\P3ServMainFunctionAglodoza.cpp">
+            <DependentOn>mainfunctions\P3ServMainFunctionAglodoza.h</DependentOn>
+            <BuildOrder>33</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="mainfunctions\P3ServMainFunctionDomna.cpp">
+            <DependentOn>mainfunctions\P3ServMainFunctionDomna.h</DependentOn>
+            <BuildOrder>34</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="mainfunctions\P3ServMainFunctionKoksohim.cpp">
+            <DependentOn>mainfunctions\P3ServMainFunctionKoksohim.h</DependentOn>
+            <BuildOrder>35</BuildOrder>
+        </CppCompile>
         <CppCompile Include="P3Serv.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
@@ -219,14 +231,6 @@
             <DependentOn>P3ServMain.h</DependentOn>
             <BuildOrder>18</BuildOrder>
         </CppCompile>
-        <CppCompile Include="P3ServMainFunctionAglodoza.cpp">
-            <DependentOn>P3ServMainFunctionAglodoza.h</DependentOn>
-            <BuildOrder>34</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="P3ServMainFunctionKoksohim.cpp">
-            <DependentOn>P3ServMainFunctionKoksohim.h</DependentOn>
-            <BuildOrder>33</BuildOrder>
-        </CppCompile>
         <CppCompile Include="P3ServOptions.cpp">
             <Form>frmOptions</Form>
             <FormType>dfm</FormType>
@@ -240,25 +244,6 @@
             <Form>P3ServStrings.res</Form>
             <BuildOrder>23</BuildOrder>
         </ResourceCompile>
-        <CppCompile Include="P3ServTAglodozaDozSumRecord.cpp">
-            <DependentOn>P3ServTAglodozaDozSumRecord.h</DependentOn>
-            <BuildOrder>34</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="P3ServTAglodozaGroupsRecord.cpp">
-            <DependentOn>P3ServTAglodozaGroupsRecord.h</DependentOn>
-            <BuildOrder>28</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="P3ServTAglodozaGroupSumRecord.cpp">
-            <DependentOn>P3ServTAglodozaGroupSumRecord.h</DependentOn>
-            <BuildOrder>27</BuildOrder>
-        </CppCompile>
-        <None Include="P3ServTAglodozaRecord.h">
-            <BuildOrder>29</BuildOrder>
-        </None>
-        <CppCompile Include="P3ServTKoksohimRecord.cpp">
-            <DependentOn>P3ServTKoksohimRecord.h</DependentOn>
-            <BuildOrder>32</BuildOrder>
-        </CppCompile>
         <CppCompile Include="P3ServTSettings.cpp">
             <DependentOn>P3ServTSettings.h</DependentOn>
             <BuildOrder>24</BuildOrder>
@@ -267,6 +252,29 @@
             <ResourceType>ICON</ResourceType>
             <ResourceId>R_ICON_PROGRESS</ResourceId>
         </RcItem>
+        <CppCompile Include="records\P3ServTAglodozaDozSumRecord.cpp">
+            <DependentOn>records\P3ServTAglodozaDozSumRecord.h</DependentOn>
+            <BuildOrder>28</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="records\P3ServTAglodozaGroupsRecord.cpp">
+            <DependentOn>records\P3ServTAglodozaGroupsRecord.h</DependentOn>
+            <BuildOrder>29</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="records\P3ServTAglodozaGroupSumRecord.cpp">
+            <DependentOn>records\P3ServTAglodozaGroupSumRecord.h</DependentOn>
+            <BuildOrder>30</BuildOrder>
+        </CppCompile>
+        <None Include="records\P3ServTAglodozaRecord.h">
+            <BuildOrder>36</BuildOrder>
+        </None>
+        <CppCompile Include="records\P3ServTDomnaRecord.cpp">
+            <DependentOn>records\P3ServTDomnaRecord.h</DependentOn>
+            <BuildOrder>35</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="records\P3ServTKoksohimRecord.cpp">
+            <DependentOn>records\P3ServTKoksohimRecord.h</DependentOn>
+            <BuildOrder>32</BuildOrder>
+        </CppCompile>
         <FormResources Include="P3ServMain.dfm"/>
         <FormResources Include="P3ServOptions.dfm"/>
         <FormResources Include="P3ServLogin.dfm"/>

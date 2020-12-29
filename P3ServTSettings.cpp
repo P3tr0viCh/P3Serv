@@ -44,13 +44,13 @@ __fastcall TSettings::TSettings() {
 	FAglodozaUser = "Admin";
 	FAglodozaPass = "";
 
-	FKoksohimScaleNum = 0;
-	FKoksohimDatabase = "";
-
 	FDomnaScaleNum = 0;
 	FDomnaDatabase = "";
 	FDomnaUser = "Admin";
 	FDomnaPass = "";
+
+	FKoksohimScaleNum = 0;
+	FKoksohimDatabase = "";
 }
 
 // ---------------------------------------------------------------------------
@@ -98,11 +98,6 @@ bool __fastcall TSettings::Equals(TObject * Obj) {
 	if (Settings->AglodozaPass != AglodozaPass)
 		return false;
 
-	if (Settings->KoksohimScaleNum != KoksohimScaleNum)
-		return false;
-	if (Settings->KoksohimDatabase != KoksohimDatabase)
-		return false;
-
 	if (Settings->DomnaScaleNum != DomnaScaleNum)
 		return false;
 	if (Settings->DomnaDatabase != DomnaDatabase)
@@ -110,6 +105,11 @@ bool __fastcall TSettings::Equals(TObject * Obj) {
 	if (Settings->DomnaUser != DomnaUser)
 		return false;
 	if (Settings->DomnaPass != DomnaPass)
+		return false;
+
+	if (Settings->KoksohimScaleNum != KoksohimScaleNum)
+		return false;
+	if (Settings->KoksohimDatabase != KoksohimDatabase)
 		return false;
 
 	return true;
@@ -135,13 +135,13 @@ void __fastcall TSettings::Assign(TSettings * Source) {
 	FAglodozaUser = Source->AglodozaUser;
 	FAglodozaPass = Source->AglodozaPass;
 
-	FKoksohimScaleNum = Source->KoksohimScaleNum;
-	FKoksohimDatabase = Source->KoksohimDatabase;
-
 	FDomnaScaleNum = Source->DomnaScaleNum;
 	FDomnaDatabase = Source->DomnaDatabase;
 	FDomnaUser = Source->DomnaUser;
 	FDomnaPass = Source->DomnaPass;
+
+	FKoksohimScaleNum = Source->KoksohimScaleNum;
+	FKoksohimDatabase = Source->KoksohimDatabase;
 }
 
 // ---------------------------------------------------------------------------
@@ -176,12 +176,7 @@ String __fastcall TSettings::ToString() {
 	S += "AglodozaUser='" + AglodozaUser + "'";
 	S += ",";
 	S += "AglodozaPass='" + AglodozaPass + "'";
-	S += ",";
-
-	S += "KoksohimScaleNum='" + IntToStr(KoksohimScaleNum) + "'";
-	S += ",";
-	S += "KoksohimDatabase='" + KoksohimDatabase + "'";
-	S += ",";
+ 	S += ",";
 
 	S += "DomnaScaleNum='" + IntToStr(DomnaScaleNum) + "'";
 	S += ",";
@@ -190,6 +185,11 @@ String __fastcall TSettings::ToString() {
 	S += "DomnaUser='" + DomnaUser + "'";
 	S += ",";
 	S += "DomnaPass='" + DomnaPass + "'";
+	S += ",";
+
+	S += "KoksohimScaleNum='" + IntToStr(KoksohimScaleNum) + "'";
+	S += ",";
+	S += "KoksohimDatabase='" + KoksohimDatabase + "'";
 	S += "}";
 
 	return S;
@@ -305,14 +305,14 @@ void TSettings::LoadSettings() {
 		AglodozaPass = Decrypt(IniFile->ReadString(Section, "Pass",
 			AglodozaPass));
 
-		Section = "KoksohimConnection";
-		KoksohimDatabase = IniFile->ReadString(Section, "Database",
-			KoksohimDatabase);
-
 		Section = "DomnaConnection";
 		DomnaDatabase = IniFile->ReadString(Section, "Database", DomnaDatabase);
 		DomnaUser = IniFile->ReadString(Section, "User", DomnaUser);
 		DomnaPass = Decrypt(IniFile->ReadString(Section, "Pass", DomnaPass));
+
+		Section = "KoksohimConnection";
+		KoksohimDatabase = IniFile->ReadString(Section, "Database",
+			KoksohimDatabase);
 
 		CheckCRC(IniFile->ReadString("CRC", "CRC", ""));
 	}
@@ -353,13 +353,13 @@ void TSettings::SaveSettings() {
 		IniFile->WriteString(Section, "User", AglodozaUser);
 		IniFile->WriteString(Section, "Pass", Encrypt(AglodozaPass));
 
-		Section = "KoksohimConnection";
-		IniFile->WriteString(Section, "Database", KoksohimDatabase);
-
 		Section = "DomnaConnection";
 		IniFile->WriteString(Section, "Database", DomnaDatabase);
 		IniFile->WriteString(Section, "User", DomnaUser);
 		IniFile->WriteString(Section, "Pass", Encrypt(DomnaPass));
+
+		Section = "KoksohimConnection";
+		IniFile->WriteString(Section, "Database", KoksohimDatabase);
 	}
 	__finally {
 		delete IniFile;

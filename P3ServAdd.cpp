@@ -63,7 +63,6 @@ void CheckSettings(TSettings * Settings) {
 		}
 
 		break;
-	case pmUnknown:
 	default:
 		throw EIniFileException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
 			"program mode"));
@@ -82,12 +81,12 @@ String GetAccessConnectionString(TSettings * Settings) {
 	String Database, User, Pass;
 
 	switch (Settings->ProgramMode) {
-	pmAglodoza:
+	case pmAglodoza:
 		Database = Settings->AglodozaDatabase;
 		User = Settings->AglodozaUser;
 		Pass = Settings->AglodozaPass;
 		break;
-	pmDomna:
+	case pmDomna:
 		Database = Settings->DomnaDatabase;
 		User = Settings->DomnaUser;
 		Pass = Settings->DomnaPass;
@@ -102,36 +101,21 @@ String GetAccessConnectionString(TSettings * Settings) {
 void OpenMySQLConnection(TSettings * Settings, TADOConnection * Connection) {
 	Connection->ConnectionString = GetMySQLConnectionString(Settings);
 
+	// WriteToLog(Connection->ConnectionString);
+
 	try {
 		Connection->Open();
 	}
 	catch (Exception &E) {
-		throw Exception(IDS_LOG_ERROR_SERVER_DB_OPEN,
-		ARRAYOFCONST((E.Message)));
+		throw Exception(Format(IDS_LOG_ERROR_SERVER_DB_OPEN, E.Message));
 	}
 }
 
 // ---------------------------------------------------------------------------
 void OpenAccessConnection(TSettings * Settings, TADOConnection * Connection) {
-	String Database;
-
-	switch (Settings->ProgramMode) {
-	case pmAglodoza:
-		Database = Settings->AglodozaDatabase;
-		break;
-	case pmDomna:
-		Database = Settings->DomnaDatabase;
-		break;
-	default:
-		throw Exception("OpenAccessConnection");
-	}
-
-	if (!FileExists(Database)) {
-		throw EFileNotFoundException(Format(IDS_LOG_ERROR_LOCAL_DB_NOT_EXISTS,
-			Database));
-	}
-
 	Connection->ConnectionString = GetAccessConnectionString(Settings);
+
+	// WriteToLog(Connection->ConnectionString);
 
 	try {
 		Connection->Open();
@@ -201,4 +185,3 @@ String GetSyncFileFullName(String FileName) {
 }
 
 // ---------------------------------------------------------------------------
-

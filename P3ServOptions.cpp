@@ -49,6 +49,10 @@ void __fastcall TfrmOptions::FormCreate(TObject *Sender) {
 
 	PageControl->ActivePageIndex = 0;
 
+	rgProgramMode->Items->AddObject("Аглодозировка", (TObject*)pmAglodoza);
+	rgProgramMode->Items->AddObject("Доменная печь", (TObject*)pmDomna);
+	rgProgramMode->Items->AddObject("Дозаторы КХП", (TObject*)pmKoksohim);
+
 	btnCheckMySQL->Tag = pmUnknown;
 	btnCheckAglodoza->Tag = pmAglodoza;
 	btnCheckKoksohim->Tag = pmKoksohim;
@@ -79,7 +83,12 @@ void TfrmOptions::UpdateForm() {
 	eOptionsPass->Text = Settings->OptionsPass;
 	eOptionsPass2->Text = Settings->OptionsPass;
 
-	rgProgramMode->ItemIndex = Settings->ProgramMode - 1;
+	for (int i = 0; i < rgProgramMode->Items->Count; i++) {
+		if ((int)rgProgramMode->Items->Objects[i] == Settings->ProgramMode) {
+			rgProgramMode->ItemIndex = i;
+			break;
+		}
+	}
 
 	for (int i = 0; i < cboxTimerPeriod->Items->Count; i++) {
 		if ((int)cboxTimerPeriod->Items->Objects[i] == Settings->TimerPeriod) {
@@ -96,20 +105,23 @@ void TfrmOptions::UpdateForm() {
 	eAglodozaScaleNum->Text = IntToStr(Settings->AglodozaScaleNum);
 	eAglodozaDatabase->Text = Settings->AglodozaDatabase;
 
-	eKoksohimScaleNum->Text = IntToStr(Settings->KoksohimScaleNum);
-	eKoksohimDatabase->Text = Settings->KoksohimDatabase;
-
 	eDomnaScaleNum->Text = IntToStr(Settings->DomnaScaleNum);
 	eDomnaDatabase->Text = Settings->DomnaDatabase;
+	eDomnaPass->Text = Settings->DomnaPass;
+
+	eKoksohimScaleNum->Text = IntToStr(Settings->KoksohimScaleNum);
+	eKoksohimDatabase->Text = Settings->KoksohimDatabase;
 }
 
 // ---------------------------------------------------------------------------
 void TfrmOptions::UpdateSettings() {
 	Settings->OptionsPass = eOptionsPass->Text;
 
-	Settings->ProgramMode = TProgramMode(rgProgramMode->ItemIndex + 1);
+	Settings->ProgramMode =
+		(TProgramMode)rgProgramMode->Items->Objects[rgProgramMode->ItemIndex];
 
-	Settings->TimerPeriod = (int)cboxTimerPeriod->Items->Objects[cboxTimerPeriod->ItemIndex];
+	Settings->TimerPeriod =
+		(int)cboxTimerPeriod->Items->Objects[cboxTimerPeriod->ItemIndex];
 	Settings->TimerPeriodStart = seTimerPeriodStart->Value;
 
 	Settings->MySQLHost = eMySQLHost->Text;
@@ -119,11 +131,12 @@ void TfrmOptions::UpdateSettings() {
 	Settings->AglodozaScaleNum = StrToInt(eAglodozaScaleNum->Text);
 	Settings->AglodozaDatabase = eAglodozaDatabase->Text;
 
-	Settings->KoksohimScaleNum = StrToInt(eKoksohimScaleNum->Text);
-	Settings->KoksohimDatabase = eKoksohimDatabase->Text;
-
 	Settings->DomnaScaleNum = StrToInt(eDomnaScaleNum->Text);
 	Settings->DomnaDatabase = eDomnaDatabase->Text;
+	Settings->DomnaPass = eDomnaPass->Text;
+
+	Settings->KoksohimScaleNum = StrToInt(eKoksohimScaleNum->Text);
+	Settings->KoksohimDatabase = eKoksohimDatabase->Text;
 }
 
 void TfrmOptions::ControlSetFocus(TWinControl * Control) {
@@ -261,15 +274,14 @@ void __fastcall TfrmOptions::btnCheckMySQLClick(TObject *Sender) {
 				Settings->ProgramMode = pmAglodoza;
 				OpenAccessConnection(Settings, Connection);
 				break;
-			case pmKoksohim:
-				Database = "koksohim";
-				Settings->ProgramMode = pmKoksohim;
-				MsgBox();
-				break;
 			case pmDomna:
 				Database = "domna";
 				Settings->ProgramMode = pmDomna;
 				OpenAccessConnection(Settings, Connection);
+				break;
+			case pmKoksohim:
+				Database = "koksohim";
+				Settings->ProgramMode = pmKoksohim;
 				break;
 			default:
 				return;

@@ -10,7 +10,7 @@
 
 // ---------------------------------------------------------------------------
 enum TProgramMode {
-	pmUnknown, pmAglodoza, pmKoksohim, pmDomna
+	pmUnknown, pmAglodoza, pmDomna, pmKoksohim
 };
 
 // ---------------------------------------------------------------------------
@@ -37,14 +37,14 @@ private:
 	String FAglodozaDatabase;
 	String FAglodozaUser;
 	String FAglodozaPass;
-	// Коксохим
-	int FKoksohimScaleNum;
-	String FKoksohimDatabase;
 	// Доменная печь
 	int FDomnaScaleNum;
 	String FDomnaDatabase;
 	String FDomnaUser;
 	String FDomnaPass;
+	// Коксохим
+	int FKoksohimScaleNum;
+	String FKoksohimDatabase;
 
 	String GetConfigFileName();
 
@@ -97,17 +97,17 @@ public:
 	__property String AglodozaPass = {
 		read = FAglodozaPass, write = FAglodozaPass};
 
-	__property int KoksohimScaleNum = {
-		read = FKoksohimScaleNum, write = FKoksohimScaleNum};
-	__property String KoksohimDatabase = {
-		read = FKoksohimDatabase, write = FKoksohimDatabase};
-
 	__property int DomnaScaleNum = {
 		read = FDomnaScaleNum, write = FDomnaScaleNum};
 	__property String DomnaDatabase = {
 		read = FDomnaDatabase, write = FDomnaDatabase};
 	__property String DomnaUser = {read = FDomnaUser, write = FDomnaUser};
 	__property String DomnaPass = {read = FDomnaPass, write = FDomnaPass};
+
+	__property int KoksohimScaleNum = {
+		read = FKoksohimScaleNum, write = FKoksohimScaleNum};
+	__property String KoksohimDatabase = {
+		read = FKoksohimDatabase, write = FKoksohimDatabase};
 };
 
 // ---------------------------------------------------------------------------

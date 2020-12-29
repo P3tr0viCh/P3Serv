@@ -53,6 +53,7 @@ object Main: TMain
     PopupMenu = PopupMenu
     Visible = True
     OnClick = TrayIconClick
+    OnDblClick = TrayIconDblClick
     Left = 32
     Top = 24
   end

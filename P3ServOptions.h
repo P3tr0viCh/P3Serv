@@ -52,6 +52,7 @@ __published:
 	TSpinEdit *seTimerPeriodStart;
 	TLabel *lblTimerPeriodStart;
 	TLabel *lblTimerPeriod;
+	TLabeledEdit *eDomnaPass;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall btnOkClick(TObject *Sender);

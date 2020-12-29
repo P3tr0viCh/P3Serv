@@ -4,7 +4,7 @@ object frmOptions: TfrmOptions
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
-  ClientHeight = 376
+  ClientHeight = 372
   ClientWidth = 464
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,12 +18,12 @@ object frmOptions: TfrmOptions
   OnDestroy = FormDestroy
   DesignSize = (
     464
-    376)
+    372)
   PixelsPerInch = 96
   TextHeight = 21
   object btnOk: TButton
     Left = 258
-    Top = 336
+    Top = 332
     Width = 96
     Height = 32
     Anchors = [akRight, akBottom]
@@ -31,11 +31,11 @@ object frmOptions: TfrmOptions
     Default = True
     TabOrder = 1
     OnClick = btnOkClick
-    ExplicitTop = 312
+    ExplicitTop = 336
   end
   object btnCancel: TButton
     Left = 360
-    Top = 336
+    Top = 332
     Width = 96
     Height = 32
     Anchors = [akRight, akBottom]
@@ -43,19 +43,19 @@ object frmOptions: TfrmOptions
     Caption = #1054#1090#1084#1077#1085#1072
     ModalResult = 2
     TabOrder = 2
-    ExplicitTop = 312
+    ExplicitTop = 336
   end
   object PageControl: TPageControl
     Left = 8
     Top = 8
     Width = 450
-    Height = 320
-    ActivePage = tsMain
+    Height = 316
+    ActivePage = tsDomna
     MultiLine = True
     TabOrder = 0
     object tsMain: TTabSheet
       Caption = #1055#1088#1086#1075#1088#1072#1084#1084#1072
-      ExplicitHeight = 232
+      ExplicitHeight = 258
       object gbOptions: TGroupBox
         Left = 8
         Top = 8
@@ -90,24 +90,20 @@ object frmOptions: TfrmOptions
         Left = 8
         Top = 96
         Width = 208
-        Height = 154
+        Height = 150
         Caption = #1058#1080#1087' '#1084#1086#1076#1091#1083#1103
-        Items.Strings = (
-          #1040#1075#1083#1086#1076#1086#1079#1080#1088#1086#1074#1082#1072
-          #1044#1086#1079#1072#1090#1086#1088#1099' '#1050#1061#1055
-          #1044#1086#1084#1077#1085#1085#1072#1103' '#1087#1077#1095#1100)
         TabOrder = 1
       end
       object gbTimer: TGroupBox
         Left = 224
         Top = 96
         Width = 208
-        Height = 154
+        Height = 150
         Caption = #1058#1072#1081#1084#1077#1088' '#1086#1090#1087#1088#1072#1074#1082#1080
         TabOrder = 2
         object lblTimerPeriodStart: TLabel
           Left = 8
-          Top = 88
+          Top = 84
           Width = 112
           Height = 21
           Caption = #1053#1072#1095#1072#1083#1086' '#1086#1090#1089#1095#1105#1090#1072
@@ -131,7 +127,7 @@ object frmOptions: TfrmOptions
         end
         object seTimerPeriodStart: TSpinEdit
           Left = 8
-          Top = 112
+          Top = 108
           Width = 192
           Height = 31
           MaxValue = 59
@@ -144,12 +140,12 @@ object frmOptions: TfrmOptions
     object tsMySQL: TTabSheet
       Caption = 'MySQL'
       ImageIndex = 1
-      ExplicitHeight = 232
+      ExplicitHeight = 258
       object gbMySQL: TGroupBox
         Left = 8
         Top = 8
         Width = 424
-        Height = 192
+        Height = 188
         Caption = #1055#1086#1076#1082#1083#1102#1095#1077#1085#1080#1077
         TabOrder = 0
         object eMySQLHost: TLabeledEdit
@@ -164,7 +160,7 @@ object frmOptions: TfrmOptions
         end
         object eMySQLUser: TLabeledEdit
           Left = 8
-          Top = 112
+          Top = 108
           Width = 200
           Height = 29
           EditLabel.Width = 44
@@ -174,7 +170,7 @@ object frmOptions: TfrmOptions
         end
         object eMySQLPass: TLabeledEdit
           Left = 216
-          Top = 112
+          Top = 108
           Width = 200
           Height = 29
           EditLabel.Width = 53
@@ -185,7 +181,7 @@ object frmOptions: TfrmOptions
         end
         object btnCheckMySQL: TButton
           Left = 8
-          Top = 150
+          Top = 146
           Width = 96
           Height = 32
           Caption = #1055#1088#1086#1074#1077#1088#1082#1072
@@ -197,7 +193,7 @@ object frmOptions: TfrmOptions
     object tsAglodoza: TTabSheet
       Caption = #1040#1075#1083#1086#1076#1086#1079#1080#1088#1086#1074#1082#1072
       ImageIndex = 2
-      ExplicitHeight = 232
+      ExplicitHeight = 258
       object eAglodozaScaleNum: TLabeledEdit
         Left = 8
         Top = 32
@@ -210,7 +206,7 @@ object frmOptions: TfrmOptions
       end
       object eAglodozaDatabase: TLabeledEdit
         Left = 8
-        Top = 96
+        Top = 92
         Width = 386
         Height = 29
         EditLabel.Width = 89
@@ -220,7 +216,7 @@ object frmOptions: TfrmOptions
       end
       object btnAglodozaDatabase: TButton
         Left = 404
-        Top = 96
+        Top = 92
         Width = 30
         Height = 29
         Caption = '...'
@@ -229,7 +225,7 @@ object frmOptions: TfrmOptions
       end
       object btnCheckAglodoza: TButton
         Left = 8
-        Top = 136
+        Top = 132
         Width = 96
         Height = 32
         Caption = #1055#1088#1086#1074#1077#1088#1082#1072
@@ -240,7 +236,7 @@ object frmOptions: TfrmOptions
     object tsKoksohim: TTabSheet
       Caption = #1044#1086#1079#1072#1090#1086#1088#1099' '#1050#1061#1055
       ImageIndex = 3
-      ExplicitHeight = 232
+      ExplicitHeight = 258
       object eKoksohimScaleNum: TLabeledEdit
         Left = 8
         Top = 32
@@ -253,7 +249,7 @@ object frmOptions: TfrmOptions
       end
       object eKoksohimDatabase: TLabeledEdit
         Left = 8
-        Top = 96
+        Top = 92
         Width = 386
         Height = 29
         EditLabel.Width = 89
@@ -263,16 +259,17 @@ object frmOptions: TfrmOptions
       end
       object btnCheckKoksohim: TButton
         Left = 8
-        Top = 136
+        Top = 132
         Width = 96
         Height = 32
         Caption = #1055#1088#1086#1074#1077#1088#1082#1072
         TabOrder = 3
+        Visible = False
         OnClick = btnCheckMySQLClick
       end
       object btnKoksohimDatabase: TButton
         Left = 404
-        Top = 96
+        Top = 92
         Width = 30
         Height = 29
         Caption = '...'
@@ -283,7 +280,7 @@ object frmOptions: TfrmOptions
     object tsDomna: TTabSheet
       Caption = #1044#1086#1084#1077#1085#1085#1072#1103' '#1087#1077#1095#1100
       ImageIndex = 4
-      ExplicitHeight = 232
+      ExplicitHeight = 258
       object eDomnaScaleNum: TLabeledEdit
         Left = 8
         Top = 32
@@ -296,7 +293,7 @@ object frmOptions: TfrmOptions
       end
       object eDomnaDatabase: TLabeledEdit
         Left = 8
-        Top = 96
+        Top = 92
         Width = 386
         Height = 29
         EditLabel.Width = 89
@@ -306,7 +303,7 @@ object frmOptions: TfrmOptions
       end
       object btnCheckDomna: TButton
         Left = 8
-        Top = 136
+        Top = 192
         Width = 96
         Height = 32
         Caption = #1055#1088#1086#1074#1077#1088#1082#1072
@@ -315,12 +312,23 @@ object frmOptions: TfrmOptions
       end
       object btnDomnaDatabase: TButton
         Left = 404
-        Top = 96
+        Top = 92
         Width = 30
         Height = 29
         Caption = '...'
         TabOrder = 2
         OnClick = btnAglodozaDatabaseClick
+      end
+      object eDomnaPass: TLabeledEdit
+        Left = 8
+        Top = 152
+        Width = 200
+        Height = 29
+        EditLabel.Width = 53
+        EditLabel.Height = 21
+        EditLabel.Caption = #1055#1072#1088#1086#1083#1100
+        PasswordChar = '#'
+        TabOrder = 4
       end
     end
   end

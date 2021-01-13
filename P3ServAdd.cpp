@@ -142,6 +142,12 @@ void SQLSetParam(TADOQuery * Query, String ParamName, int Value) {
 }
 
 // ---------------------------------------------------------------------------
+void SQLSetParam(TADOQuery * Query, String ParamName, float Value) {
+	Query->Parameters->ParamByName(ParamName)->DataType = ftFloat;
+	Query->Parameters->ParamByName(ParamName)->Value = Value;
+}
+
+// ---------------------------------------------------------------------------
 void SQLSetParam(TADOQuery * Query, String ParamName, String Value) {
 	Query->Parameters->ParamByName(ParamName)->DataType = ftString;
 	Query->Parameters->ParamByName(ParamName)->Value = Value;

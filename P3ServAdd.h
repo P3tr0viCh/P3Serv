@@ -31,6 +31,7 @@ void SQLAdd(TADOQuery * Query, NativeUInt Ident);
 
 // ---------------------------------------------------------------------------
 void SQLSetParam(TADOQuery * Query, String ParamName, int Value);
+void SQLSetParam(TADOQuery * Query, String ParamName, float Value);
 void SQLSetParam(TADOQuery * Query, String ParamName, String Value);
 void SQLSetParam(TADOQuery * Query, String ParamName, TDateTime Value);
 

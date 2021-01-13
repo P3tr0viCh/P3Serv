@@ -64,7 +64,7 @@ String KoksohimReadField(int FileHandle, int FieldSize) {
 }
 
 // ---------------------------------------------------------------------------
-TKoksohimRecord * KoksohimReadRecord(int FileHandle, int RecordNum) {
+void KoksohimReadRecord(int FileHandle, int RecordNum, TKoksohimRecord * Record) {
 	String TmStamp = KoksohimReadField(FileHandle, FIELD_TMSTAMP_SIZE);
 	String DozN = KoksohimReadField(FileHandle, FIELD_DOZN_SIZE);
 
@@ -79,8 +79,6 @@ TKoksohimRecord * KoksohimReadRecord(int FileHandle, int RecordNum) {
 		TReplaceFlags());
 	Virabotka = StringReplace(Virabotka, ',', FormatSettings.DecimalSeparator,
 		TReplaceFlags());
-
-	TKoksohimRecord * Record = new TKoksohimRecord();
 
 	try {
 		// 18123002 => 2018-12-30 02:00:00
@@ -100,8 +98,6 @@ TKoksohimRecord * KoksohimReadRecord(int FileHandle, int RecordNum) {
 		WriteToLog(Format(IDS_LOG_ERROR_CORRUPTED_RECORD,
 			ARRAYOFCONST((RecordNum + 1, TmStamp, DozN, Virabotka, Material))));
 	}
-
-	return Record;
 }
 
 // ---------------------------------------------------------------------------
@@ -127,7 +123,7 @@ void KoksohimLoad(TSettings * Settings, TKoksohimRecordList * Records) {
 		for (int i = 0; i < TotalRecordCount; i++) {
 			Record = new TKoksohimRecord();
 
-			Record = KoksohimReadRecord(FileHandle, i);
+			KoksohimReadRecord(FileHandle, i, Record);
 
 			Records->Add(Record);
 		}

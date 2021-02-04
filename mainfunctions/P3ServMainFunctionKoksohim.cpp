@@ -64,7 +64,8 @@ String KoksohimReadField(int FileHandle, int FieldSize) {
 }
 
 // ---------------------------------------------------------------------------
-void KoksohimReadRecord(int FileHandle, int RecordNum, TKoksohimRecord * Record) {
+bool KoksohimReadRecord(int FileHandle, int RecordNum, TKoksohimRecord * Record)
+{
 	String TmStamp = KoksohimReadField(FileHandle, FIELD_TMSTAMP_SIZE);
 	String DozN = KoksohimReadField(FileHandle, FIELD_DOZN_SIZE);
 
@@ -95,9 +96,13 @@ void KoksohimReadRecord(int FileHandle, int RecordNum, TKoksohimRecord * Record)
 		Record->Material = StrToInt(Material);
 	}
 	catch (...) {
-		WriteToLog(Format(IDS_LOG_ERROR_CORRUPTED_RECORD,
-			ARRAYOFCONST((RecordNum + 1, TmStamp, DozN, Virabotka, Material))));
+		// WriteToLog(Format(IDS_LOG_ERROR_CORRUPTED_RECORD,
+		// ARRAYOFCONST((RecordNum + 1, TmStamp, DozN, Virabotka, Material))));
+
+		return false;
 	}
+
+	return true;
 }
 
 // ---------------------------------------------------------------------------
@@ -123,9 +128,13 @@ void KoksohimLoad(TSettings * Settings, TKoksohimRecordList * Records) {
 		for (int i = 0; i < TotalRecordCount; i++) {
 			Record = new TKoksohimRecord();
 
-			KoksohimReadRecord(FileHandle, i, Record);
+			if (KoksohimReadRecord(FileHandle, i, Record)) {
+				Records->Add(Record);
+			}
+			else {
+				delete Record;
+			}
 
-			Records->Add(Record);
 		}
 	}
 	__finally {
@@ -208,9 +217,9 @@ void MainFunctionKoksohim(TSettings * Settings) {
 	int NU;
 
 	try {
-		KoksohimLoadSyncList(SyncList);
-
 		KoksohimLoad(Settings, Records);
+
+		KoksohimLoadSyncList(SyncList);
 
 		// В начале файла могут содержаться данные за прошлый год,
 		// при этом в дате у них стоит текущий.
@@ -226,17 +235,46 @@ void MainFunctionKoksohim(TSettings * Settings) {
 		// 18010100	02	2	0,0		20
 		// 18010100	03	2	0,0		04
 		// ...
+		// Также, в конце файла  могут быть данные за следующий год.
+		// В довесок, могут быть повторяющиеся записи.
+        // На редкость убогая программа. ЪУЪ
 
-		TDateTime BreakDateTime = Now();
-		// << Это и условие ниже попытка исправить
+		// Исправляем даты
+
+		int BreakID = -1;
+		TDateTime BreakDateTime = 0;
+
+		for (int i = 0; i < Records->Count; i++) {
+			if (Records->Items[i]->DateTime < BreakDateTime) {
+				BreakID = i;
+				break;
+			}
+			BreakDateTime = Records->Items[i]->DateTime;
+		}
+
+		for (int i = 0; i < BreakID; i++) {
+			Records->Items[i]->DateTime =
+				IncYear(Records->Items[i]->DateTime, -1);
+		}
+
+		BreakID = Records->Count;
+		BreakDateTime = Now();
 
 		for (int i = Records->Count - 1; i >= 0; i--) {
 			if (Records->Items[i]->DateTime > BreakDateTime) {
+				BreakID = i;
 				break;
 			}
-
 			BreakDateTime = Records->Items[i]->DateTime;
+		}
 
+		for (int i = BreakID + 1; i < Records->Count; i++) {
+			Records->Items[i]->DateTime =
+				IncYear(Records->Items[i]->DateTime, 1);
+		}
+
+		// Сохраняем
+		for (int i = 0; i < Records->Count; i++) {
 			String ID = DateTimeToKoksohimSyncStr(Records->Items[i]->DateTime);
 			ID += IntToStr(Records->Items[i]->DozatorNum);
 
@@ -266,7 +304,6 @@ void MainFunctionKoksohim(TSettings * Settings) {
 
 		if (SyncListNewValues->Count > 0) {
 			SyncList->AddStrings(SyncListNewValues);
-			SyncList->Sorted = true;
 			try {
 				SyncList->SaveToFile(GetSyncFileFullName(SYNC_KOKSOHIM));
 			}

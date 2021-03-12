@@ -19,6 +19,7 @@ private:
 	bool FLeftSide;
 	float FNetto;
 	int FPartCode;
+	float FHumidity;
 
 public:
 	bool __fastcall Equals(TObject * Obj);
@@ -35,6 +36,7 @@ public:
 	__property bool LeftSide = {read = FLeftSide, write = FLeftSide};
 	__property float Netto = {read = FNetto, write = FNetto};
 	__property int PartCode = {read = FPartCode, write = FPartCode};
+	__property float Humidity = {read = FHumidity, write = FHumidity};
 };
 
 // ---------------------------------------------------------------------------

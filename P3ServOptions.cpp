@@ -108,6 +108,7 @@ void TfrmOptions::UpdateForm() {
 	eDomnaScaleNum->Text = IntToStr(Settings->DomnaScaleNum);
 	eDomnaDatabase->Text = Settings->DomnaDatabase;
 	eDomnaPass->Text = Settings->DomnaPass;
+	cboxHumidity->Checked = Settings->DomnaHumidity;
 
 	eKoksohimScaleNum->Text = IntToStr(Settings->KoksohimScaleNum);
 	eKoksohimDatabase->Text = Settings->KoksohimDatabase;
@@ -134,6 +135,7 @@ void TfrmOptions::UpdateSettings() {
 	Settings->DomnaScaleNum = StrToInt(eDomnaScaleNum->Text);
 	Settings->DomnaDatabase = eDomnaDatabase->Text;
 	Settings->DomnaPass = eDomnaPass->Text;
+	Settings->DomnaHumidity = cboxHumidity->Checked;
 
 	Settings->KoksohimScaleNum = StrToInt(eKoksohimScaleNum->Text);
 	Settings->KoksohimDatabase = eKoksohimDatabase->Text;

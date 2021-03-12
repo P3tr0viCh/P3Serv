@@ -30,6 +30,9 @@ void DomnaLoad(TSettings * Settings, TDomnaRecordList * Records,
 	SQLAdd(Query, "Measures.ID, Measures.DT, Measures.Weigh, Measures.PartID,");
 	SQLAdd(Query, "Weights.WeighName, Weights.WeighID, Weights.Left,");
 	SQLAdd(Query, "Products.Product, Products.ProductID");
+	if (Settings->DomnaHumidity) {
+		SQLAdd(Query, ", Measures.Humidity");
+	}
 	SQLAdd(Query, IDS_SQL_FROM);
 	SQLAdd(Query, IDS_SQL_TABLE_DOMNA_MEASURES);
 	SQLAdd(Query, ",");
@@ -69,7 +72,10 @@ void DomnaLoad(TSettings * Settings, TDomnaRecordList * Records,
 			Record->LeftSide = Query->Fields->FieldByName("Left")->AsBoolean;
 			Record->Netto = Query->Fields->FieldByName("Weigh")->AsFloat;
 			Record->PartCode = Query->Fields->FieldByName("PartID")->AsInteger;
-
+			if (Settings->DomnaHumidity) {
+				Record->Humidity = Query->Fields->FieldByName("Humidity")
+					->AsFloat;
+			}
 			Records->Add(Record);
 
 			Query->Next();
@@ -103,17 +109,31 @@ void DomnaSaveToServer(TSettings * Settings, TDomnaRecord * Record,
 	TADOQuery * Query) {
 	Query->SQL->Clear();
 
+	String S = "";
+
 	SQLAdd(Query, IDS_SQL_INSERT);
 	SQLAdd(Query, IDS_SQL_TABLE_DOMNA_MYSQL);
+	S += "(";
+	S += "scales, bdatetime, id, weighname, weighname_code, product, product_code, leftside, netto, part_code";
+	if (Settings->DomnaHumidity) {
+		S += ", humidity";
+	}
+	S += ")";
+	SQLAdd(Query, S);
 	SQLAdd(Query, IDS_SQL_VALUES);
 
-	String S = "";
+	S = "";
 
 	S += "(";
 	S += ":scales, :bdatetime, :id, :weighname, :weighname_code, :product, :product_code, :leftside, :netto, :part_code";
+	if (Settings->DomnaHumidity) {
+		S += ", :humidity";
+	}
 	S += ")";
 
 	SQLAdd(Query, S);
+
+	// WriteToLog(Query->SQL->Text);
 
 	SQLSetParam(Query, "scales", Settings->DomnaScaleNum);
 	SQLSetParam(Query, "bdatetime", Record->DateTime);
@@ -125,7 +145,9 @@ void DomnaSaveToServer(TSettings * Settings, TDomnaRecord * Record,
 	SQLSetParam(Query, "leftside", Record->LeftSide);
 	SQLSetParam(Query, "netto", Record->Netto);
 	SQLSetParam(Query, "part_code", Record->PartCode);
-
+	if (Settings->DomnaHumidity) {
+		SQLSetParam(Query, "humidity", Record->Humidity);
+	}
 	Query->Prepared = true;
 
 	SQLExec(Query);

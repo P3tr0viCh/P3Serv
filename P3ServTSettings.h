@@ -42,6 +42,7 @@ private:
 	String FDomnaDatabase;
 	String FDomnaUser;
 	String FDomnaPass;
+	bool FDomnaHumidity;
 	// Коксохим
 	int FKoksohimScaleNum;
 	String FKoksohimDatabase;
@@ -103,6 +104,7 @@ public:
 		read = FDomnaDatabase, write = FDomnaDatabase};
 	__property String DomnaUser = {read = FDomnaUser, write = FDomnaUser};
 	__property String DomnaPass = {read = FDomnaPass, write = FDomnaPass};
+	__property bool DomnaHumidity = {read = FDomnaHumidity, write = FDomnaHumidity};
 
 	__property int KoksohimScaleNum = {
 		read = FKoksohimScaleNum, write = FKoksohimScaleNum};

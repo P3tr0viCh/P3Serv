@@ -48,6 +48,7 @@ __fastcall TSettings::TSettings() {
 	FDomnaDatabase = "";
 	FDomnaUser = "Admin";
 	FDomnaPass = "";
+	FDomnaHumidity = false;
 
 	FKoksohimScaleNum = 0;
 	FKoksohimDatabase = "";
@@ -106,6 +107,8 @@ bool __fastcall TSettings::Equals(TObject * Obj) {
 		return false;
 	if (Settings->DomnaPass != DomnaPass)
 		return false;
+	if (Settings->DomnaHumidity != DomnaHumidity)
+		return false;
 
 	if (Settings->KoksohimScaleNum != KoksohimScaleNum)
 		return false;
@@ -139,6 +142,7 @@ void __fastcall TSettings::Assign(TSettings * Source) {
 	FDomnaDatabase = Source->DomnaDatabase;
 	FDomnaUser = Source->DomnaUser;
 	FDomnaPass = Source->DomnaPass;
+	FDomnaHumidity = Source->DomnaHumidity;
 
 	FKoksohimScaleNum = Source->KoksohimScaleNum;
 	FKoksohimDatabase = Source->KoksohimDatabase;
@@ -176,7 +180,7 @@ String __fastcall TSettings::ToString() {
 	S += "AglodozaUser='" + AglodozaUser + "'";
 	S += ",";
 	S += "AglodozaPass='" + AglodozaPass + "'";
- 	S += ",";
+	S += ",";
 
 	S += "DomnaScaleNum='" + IntToStr(DomnaScaleNum) + "'";
 	S += ",";
@@ -185,6 +189,8 @@ String __fastcall TSettings::ToString() {
 	S += "DomnaUser='" + DomnaUser + "'";
 	S += ",";
 	S += "DomnaPass='" + DomnaPass + "'";
+	S += ",";
+	S += "DomnaHumidity='" + BoolToStr(DomnaHumidity) + "'";
 	S += ",";
 
 	S += "KoksohimScaleNum='" + IntToStr(KoksohimScaleNum) + "'";
@@ -309,6 +315,7 @@ void TSettings::LoadSettings() {
 		DomnaDatabase = IniFile->ReadString(Section, "Database", DomnaDatabase);
 		DomnaUser = IniFile->ReadString(Section, "User", DomnaUser);
 		DomnaPass = Decrypt(IniFile->ReadString(Section, "Pass", DomnaPass));
+		DomnaHumidity = IniFile->ReadBool(Section, "Humidity", DomnaHumidity);
 
 		Section = "KoksohimConnection";
 		KoksohimDatabase = IniFile->ReadString(Section, "Database",
@@ -357,6 +364,7 @@ void TSettings::SaveSettings() {
 		IniFile->WriteString(Section, "Database", DomnaDatabase);
 		IniFile->WriteString(Section, "User", DomnaUser);
 		IniFile->WriteString(Section, "Pass", Encrypt(DomnaPass));
+		IniFile->WriteBool(Section, "Humidity", DomnaHumidity);
 
 		Section = "KoksohimConnection";
 		IniFile->WriteString(Section, "Database", KoksohimDatabase);

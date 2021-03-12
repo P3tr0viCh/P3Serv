@@ -31,7 +31,6 @@ object frmOptions: TfrmOptions
     Default = True
     TabOrder = 1
     OnClick = btnOkClick
-    ExplicitTop = 336
   end
   object btnCancel: TButton
     Left = 360
@@ -43,7 +42,6 @@ object frmOptions: TfrmOptions
     Caption = #1054#1090#1084#1077#1085#1072
     ModalResult = 2
     TabOrder = 2
-    ExplicitTop = 336
   end
   object PageControl: TPageControl
     Left = 8
@@ -55,7 +53,6 @@ object frmOptions: TfrmOptions
     TabOrder = 0
     object tsMain: TTabSheet
       Caption = #1055#1088#1086#1075#1088#1072#1084#1084#1072
-      ExplicitHeight = 258
       object gbOptions: TGroupBox
         Left = 8
         Top = 8
@@ -140,7 +137,6 @@ object frmOptions: TfrmOptions
     object tsMySQL: TTabSheet
       Caption = 'MySQL'
       ImageIndex = 1
-      ExplicitHeight = 258
       object gbMySQL: TGroupBox
         Left = 8
         Top = 8
@@ -193,7 +189,6 @@ object frmOptions: TfrmOptions
     object tsAglodoza: TTabSheet
       Caption = #1040#1075#1083#1086#1076#1086#1079#1080#1088#1086#1074#1082#1072
       ImageIndex = 2
-      ExplicitHeight = 258
       object eAglodozaScaleNum: TLabeledEdit
         Left = 8
         Top = 32
@@ -236,7 +231,6 @@ object frmOptions: TfrmOptions
     object tsKoksohim: TTabSheet
       Caption = #1044#1086#1079#1072#1090#1086#1088#1099' '#1050#1061#1055
       ImageIndex = 3
-      ExplicitHeight = 258
       object eKoksohimScaleNum: TLabeledEdit
         Left = 8
         Top = 32
@@ -280,7 +274,6 @@ object frmOptions: TfrmOptions
     object tsDomna: TTabSheet
       Caption = #1044#1086#1084#1077#1085#1085#1072#1103' '#1087#1077#1095#1100
       ImageIndex = 4
-      ExplicitHeight = 258
       object eDomnaScaleNum: TLabeledEdit
         Left = 8
         Top = 32
@@ -329,6 +322,14 @@ object frmOptions: TfrmOptions
         EditLabel.Caption = #1055#1072#1088#1086#1083#1100
         PasswordChar = '#'
         TabOrder = 4
+      end
+      object cboxHumidity: TCheckBox
+        Left = 144
+        Top = 38
+        Width = 97
+        Height = 17
+        Caption = #1042#1083#1072#1078#1085#1086#1089#1090#1100
+        TabOrder = 5
       end
     end
   end

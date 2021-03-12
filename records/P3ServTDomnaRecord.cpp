@@ -34,6 +34,8 @@ bool __fastcall TDomnaRecord::Equals(TObject * Obj) {
 		return false;
 	if (PartCode != Record->PartCode)
 		return false;
+	if (Humidity != Record->Humidity)
+		return false;
 
 	return true;
 }
@@ -51,6 +53,7 @@ void __fastcall TDomnaRecord::Assign(TObject * Source) {
 	LeftSide = Record->LeftSide;
 	Netto = Record->Netto;
 	PartCode = Record->PartCode;
+	Humidity = Record->Humidity;
 }
 
 // ---------------------------------------------------------------------------
@@ -75,6 +78,8 @@ String __fastcall TDomnaRecord::ToString() {
 	S += "Netto='" + FloatToStr(Netto) + "'";
 	S += ",";
 	S += "PartCode='" + IntToStr(PartCode) + "'";
+	S += ",";
+	S += "Humidity='" + FloatToStr(Humidity) + "'";
 
 	S += "}";
 

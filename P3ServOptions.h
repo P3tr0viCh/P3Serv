@@ -53,6 +53,7 @@ __published:
 	TLabel *lblTimerPeriodStart;
 	TLabel *lblTimerPeriod;
 	TLabeledEdit *eDomnaPass;
+	TCheckBox *cboxHumidity;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall btnOkClick(TObject *Sender);

@@ -88,6 +88,8 @@ IDS_LOG_DOMNA_DATA_SAVED,
         "data saved, count=%d (%s)"
 IDS_LOG_KOKSOHIM_DATA_SAVED,
         "data saved, count=%d (%s)"
+IDS_LOG_KANAT_DATA_SAVED,
+        "data saved, count=%d (%s)"
 
 IDS_LOG_LOGIN_OK,
         "login: ok"
@@ -119,5 +121,7 @@ IDS_SQL_TABLE_DOMNA_WEIGHTS,            "Weights"
 IDS_SQL_TABLE_DOMNA_PRODUCTS,           "Products"
 IDS_SQL_TABLE_DOMNA_MYSQL,              "dpb"
 IDS_SQL_TABLE_KOKSOHIM_MYSQL,           "koksohim"
+IDS_SQL_TABLE_KANAT_MEASURES,           "Measures"
+IDS_SQL_TABLE_KANAT_MYSQL,              "kanatb"
 
 END

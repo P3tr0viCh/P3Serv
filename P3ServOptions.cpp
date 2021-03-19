@@ -49,18 +49,21 @@ void __fastcall TfrmOptions::FormCreate(TObject *Sender) {
 
 	PageControl->ActivePageIndex = 0;
 
-	rgProgramMode->Items->AddObject("Аглодозировка", (TObject*)pmAglodoza);
-	rgProgramMode->Items->AddObject("Доменная печь", (TObject*)pmDomna);
-	rgProgramMode->Items->AddObject("Дозаторы КХП", (TObject*)pmKoksohim);
+	rgProgramMode->Items->AddObject(tsAglodoza->Caption, (TObject*)pmAglodoza);
+	rgProgramMode->Items->AddObject(tsDomna->Caption, (TObject*)pmDomna);
+	rgProgramMode->Items->AddObject(tsKoksohim->Caption, (TObject*)pmKoksohim);
+	rgProgramMode->Items->AddObject(tsKanat->Caption, (TObject*)pmKanat);
 
 	btnCheckMySQL->Tag = pmUnknown;
 	btnCheckAglodoza->Tag = pmAglodoza;
-	btnCheckKoksohim->Tag = pmKoksohim;
 	btnCheckDomna->Tag = pmDomna;
+	btnCheckKoksohim->Tag = pmKoksohim;
+	btnCheckKanat->Tag = pmKanat;
 
 	btnAglodozaDatabase->Tag = pmAglodoza;
-	btnKoksohimDatabase->Tag = pmKoksohim;
 	btnDomnaDatabase->Tag = pmDomna;
+	btnKoksohimDatabase->Tag = pmKoksohim;
+	btnKanatDatabase->Tag = pmKanat;
 
 	cboxTimerPeriod->Items->AddObject("Отключено", (TObject*)0);
 	cboxTimerPeriod->Items->AddObject("Ежеминутно", (TObject*)1);
@@ -112,6 +115,9 @@ void TfrmOptions::UpdateForm() {
 
 	eKoksohimScaleNum->Text = IntToStr(Settings->KoksohimScaleNum);
 	eKoksohimDatabase->Text = Settings->KoksohimDatabase;
+
+	eKanatScaleNum->Text = IntToStr(Settings->KanatScaleNum);
+	eKanatDatabase->Text = Settings->KanatDatabase;
 }
 
 // ---------------------------------------------------------------------------
@@ -139,6 +145,9 @@ void TfrmOptions::UpdateSettings() {
 
 	Settings->KoksohimScaleNum = StrToInt(eKoksohimScaleNum->Text);
 	Settings->KoksohimDatabase = eKoksohimDatabase->Text;
+
+	Settings->KanatScaleNum = StrToInt(eKanatScaleNum->Text);
+	Settings->KanatDatabase = eKanatDatabase->Text;
 }
 
 void TfrmOptions::ControlSetFocus(TWinControl * Control) {
@@ -155,21 +164,35 @@ void TfrmOptions::ControlSetFocus(TWinControl * Control) {
 	Control->SetFocus();
 }
 
+void TfrmOptions::CheckEmptyEditNum(TCustomEdit * Edit) {
+	if (IsEmpty(Edit->Text)) {
+		Edit->Text = "0";
+	}
+}
+
 bool TfrmOptions::CheckEdit(TCustomEdit * Edit, NativeUInt Message) {
+	if (Edit == NULL) {
+		return true;
+	}
+
 	try {
 		StrToInt(Edit->Text);
 
 		return true;
 	}
 	catch (...) {
-		MsgBoxErr(Message);
 		ControlSetFocus(Edit);
+		MsgBoxErr(Message);
 	}
 
 	return false;
 }
 
 bool TfrmOptions::CheckFileExists(TCustomEdit * Edit) {
+	if (Edit == NULL) {
+		return true;
+	}
+
 	if (FileExists(Edit->Text)) {
 		return true;
 	}
@@ -194,38 +217,40 @@ void __fastcall TfrmOptions::btnOkClick(TObject *Sender) {
 		return;
 	}
 
+	TCustomEdit * eScaleNum;
+	TCustomEdit * eDatabase;
+
 	switch (rgProgramMode->ItemIndex + 1) {
 	case pmAglodoza:
-		if (!CheckEdit(eAglodozaScaleNum, IDS_ERROR_NEED_INT)) {
-			return;
-		}
-
-		if (!CheckFileExists(eAglodozaDatabase)) {
-			return;
-		}
-
-		break;
-	case pmKoksohim:
-		if (!CheckEdit(eKoksohimScaleNum, IDS_ERROR_NEED_INT)) {
-			return;
-		}
-
-		if (!CheckFileExists(eKoksohimDatabase)) {
-			return;
-		}
-
+		eScaleNum = eAglodozaScaleNum;
+		eDatabase = eAglodozaDatabase;
 		break;
 	case pmDomna:
-		if (!CheckEdit(eDomnaScaleNum, IDS_ERROR_NEED_INT)) {
-			return;
-		}
-
-		if (!CheckFileExists(eDomnaDatabase)) {
-			return;
-		}
-
+		eScaleNum = eDomnaScaleNum;
+		eDatabase = eDomnaDatabase;
+		break;
+	case pmKoksohim:
+		eScaleNum = eKoksohimScaleNum;
+		eDatabase = eKoksohimDatabase;
+		break;
+	case pmKanat:
+		eScaleNum = eKanatScaleNum;
+		eDatabase = eKanatDatabase;
 		break;
 	}
+
+	if (!CheckEdit(eScaleNum, IDS_ERROR_NEED_INT)) {
+		return;
+	}
+
+	if (!CheckFileExists(eDatabase)) {
+		return;
+	}
+
+	CheckEmptyEditNum(eAglodozaScaleNum);
+	CheckEmptyEditNum(eDomnaScaleNum);
+	CheckEmptyEditNum(eKoksohimScaleNum);
+	CheckEmptyEditNum(eKanatScaleNum);
 
 	UpdateSettings();
 
@@ -249,6 +274,9 @@ void __fastcall TfrmOptions::btnAglodozaDatabaseClick(TObject *Sender) {
 			break;
 		case pmDomna:
 			eDomnaDatabase->Text = OpenDialog->FileName;
+			break;
+		case pmKanat:
+			eKanatDatabase->Text = OpenDialog->FileName;
 			break;
 		}
 	}
@@ -284,6 +312,11 @@ void __fastcall TfrmOptions::btnCheckMySQLClick(TObject *Sender) {
 			case pmKoksohim:
 				Database = "koksohim";
 				Settings->ProgramMode = pmKoksohim;
+				break;
+			case pmKanat:
+				Database = "kanat";
+				Settings->ProgramMode = pmKanat;
+				OpenAccessConnection(Settings, Connection);
 				break;
 			default:
 				return;

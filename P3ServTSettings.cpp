@@ -52,6 +52,11 @@ __fastcall TSettings::TSettings() {
 
 	FKoksohimScaleNum = 0;
 	FKoksohimDatabase = "";
+
+	FKanatScaleNum = 0;
+	FKanatDatabase = "";
+	FKanatUser = "Admin";
+	FKanatPass = "";
 }
 
 // ---------------------------------------------------------------------------
@@ -115,6 +120,15 @@ bool __fastcall TSettings::Equals(TObject * Obj) {
 	if (Settings->KoksohimDatabase != KoksohimDatabase)
 		return false;
 
+	if (Settings->KanatScaleNum != KanatScaleNum)
+		return false;
+	if (Settings->KanatDatabase != KanatDatabase)
+		return false;
+	if (Settings->KanatUser != KanatUser)
+		return false;
+	if (Settings->KanatPass != KanatPass)
+		return false;
+
 	return true;
 }
 
@@ -146,6 +160,11 @@ void __fastcall TSettings::Assign(TSettings * Source) {
 
 	FKoksohimScaleNum = Source->KoksohimScaleNum;
 	FKoksohimDatabase = Source->KoksohimDatabase;
+
+	FKanatScaleNum = Source->KanatScaleNum;
+	FKanatDatabase = Source->KanatDatabase;
+	FKanatUser = Source->KanatUser;
+	FKanatPass = Source->KanatPass;
 }
 
 // ---------------------------------------------------------------------------
@@ -180,6 +199,7 @@ String __fastcall TSettings::ToString() {
 	S += "AglodozaUser='" + AglodozaUser + "'";
 	S += ",";
 	S += "AglodozaPass='" + AglodozaPass + "'";
+
 	S += ",";
 
 	S += "DomnaScaleNum='" + IntToStr(DomnaScaleNum) + "'";
@@ -191,11 +211,22 @@ String __fastcall TSettings::ToString() {
 	S += "DomnaPass='" + DomnaPass + "'";
 	S += ",";
 	S += "DomnaHumidity='" + BoolToStr(DomnaHumidity) + "'";
+
 	S += ",";
 
 	S += "KoksohimScaleNum='" + IntToStr(KoksohimScaleNum) + "'";
 	S += ",";
 	S += "KoksohimDatabase='" + KoksohimDatabase + "'";
+	S += ",";
+
+	S += "KanatScaleNum='" + IntToStr(KanatScaleNum) + "'";
+	S += ",";
+	S += "KanatDatabase='" + KanatDatabase + "'";
+	S += ",";
+	S += "KanatUser='" + KanatUser + "'";
+	S += ",";
+	S += "KanatPass='" + KanatPass + "'";
+
 	S += "}";
 
 	return S;
@@ -296,6 +327,8 @@ void TSettings::LoadSettings() {
 			KoksohimScaleNum);
 		DomnaScaleNum = IniFile->ReadInteger(Section, "DomnaNum",
 			DomnaScaleNum);
+		KanatScaleNum = IniFile->ReadInteger(Section, "KanatNum",
+			KanatScaleNum);
 
 		Section = "MySQLConnection";
 		MySQLHost = IniFile->ReadString(Section, "Host", MySQLHost);
@@ -321,7 +354,14 @@ void TSettings::LoadSettings() {
 		KoksohimDatabase = IniFile->ReadString(Section, "Database",
 			KoksohimDatabase);
 
+		Section = "KanatConnection";
+		KanatDatabase = IniFile->ReadString(Section, "Database", KanatDatabase);
+		KanatUser = IniFile->ReadString(Section, "User", KanatUser);
+		KanatPass = Decrypt(IniFile->ReadString(Section, "Pass", KanatPass));
+
+#ifdef CHECK_CRC
 		CheckCRC(IniFile->ReadString("CRC", "CRC", ""));
+#endif
 	}
 	__finally {
 		delete IniFile;
@@ -345,8 +385,9 @@ void TSettings::SaveSettings() {
 
 		Section = "ScaleInfo";
 		IniFile->WriteString(Section, "AglodozaNum", AglodozaScaleNum);
-		IniFile->WriteString(Section, "KoksohimNum", KoksohimScaleNum);
 		IniFile->WriteString(Section, "DomnaNum", DomnaScaleNum);
+		IniFile->WriteString(Section, "KoksohimNum", KoksohimScaleNum);
+		IniFile->WriteString(Section, "KanatNum", KanatScaleNum);
 
 		Section = "MySQLConnection";
 		IniFile->WriteString(Section, "Host", MySQLHost);
@@ -368,6 +409,11 @@ void TSettings::SaveSettings() {
 
 		Section = "KoksohimConnection";
 		IniFile->WriteString(Section, "Database", KoksohimDatabase);
+
+		Section = "KanatConnection";
+		IniFile->WriteString(Section, "Database", KanatDatabase);
+		IniFile->WriteString(Section, "User", KanatUser);
+		IniFile->WriteString(Section, "Pass", Encrypt(KanatPass));
 	}
 	__finally {
 		delete IniFile;

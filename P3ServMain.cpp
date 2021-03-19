@@ -22,6 +22,7 @@
 #include "P3ServMainFunctionAglodoza.h"
 #include "P3ServMainFunctionDomna.h"
 #include "P3ServMainFunctionKoksohim.h"
+#include "P3ServMainFunctionKanat.h"
 
 #include "P3ServLogin.h"
 #include "P3ServOptions.h"
@@ -243,11 +244,14 @@ void TMain::MainFunction() {
 			case pmAglodoza:
 				MainFunctionAglodoza(Settings);
 				break;
+			case pmDomna:
+				MainFunctionDomna(Settings);
+				break;
 			case pmKoksohim:
 				MainFunctionKoksohim(Settings);
 				break;
-			case pmDomna:
-				MainFunctionDomna(Settings);
+			case pmKanat:
+				MainFunctionKanat(Settings);
 				break;
 			default:
 				throw Exception("check settings");

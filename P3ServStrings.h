@@ -51,6 +51,7 @@
 #define IDS_LOG_AGLODOZA_DATA_SAVED					2200
 #define IDS_LOG_DOMNA_DATA_SAVED					2201
 #define IDS_LOG_KOKSOHIM_DATA_SAVED					2202
+#define IDS_LOG_KANAT_DATA_SAVED					2203
 
 #define IDS_LOG_LOGIN_OK							2300
 #define IDS_LOG_LOGIN_CANCEL						2301
@@ -78,6 +79,8 @@
 #define IDS_SQL_TABLE_DOMNA_PRODUCTS				3202
 #define IDS_SQL_TABLE_DOMNA_MYSQL					3203
 #define IDS_SQL_TABLE_KOKSOHIM_MYSQL				3300
+#define IDS_SQL_TABLE_KANAT_MEASURES				3400
+#define IDS_SQL_TABLE_KANAT_MYSQL					3401
 
 // ---------------------------------------------------------------------------
 #endif

@@ -8,9 +8,11 @@
 
 #define CFG_EXT ".cfg"
 
+#define CHECK_CRC
+
 // ---------------------------------------------------------------------------
 enum TProgramMode {
-	pmUnknown, pmAglodoza, pmDomna, pmKoksohim
+	pmUnknown, pmAglodoza, pmDomna, pmKoksohim, pmKanat
 };
 
 // ---------------------------------------------------------------------------
@@ -46,6 +48,11 @@ private:
 	// Коксохим
 	int FKoksohimScaleNum;
 	String FKoksohimDatabase;
+	// Канатная дорога
+	int FKanatScaleNum;
+	String FKanatDatabase;
+	String FKanatUser;
+	String FKanatPass;
 
 	String GetConfigFileName();
 
@@ -104,12 +111,20 @@ public:
 		read = FDomnaDatabase, write = FDomnaDatabase};
 	__property String DomnaUser = {read = FDomnaUser, write = FDomnaUser};
 	__property String DomnaPass = {read = FDomnaPass, write = FDomnaPass};
-	__property bool DomnaHumidity = {read = FDomnaHumidity, write = FDomnaHumidity};
+	__property bool DomnaHumidity = {
+		read = FDomnaHumidity, write = FDomnaHumidity};
 
 	__property int KoksohimScaleNum = {
 		read = FKoksohimScaleNum, write = FKoksohimScaleNum};
 	__property String KoksohimDatabase = {
 		read = FKoksohimDatabase, write = FKoksohimDatabase};
+
+	__property int KanatScaleNum = {
+		read = FKanatScaleNum, write = FKanatScaleNum};
+	__property String KanatDatabase = {
+		read = FKanatDatabase, write = FKanatDatabase};
+	__property String KanatUser = {read = FKanatUser, write = FKanatUser};
+	__property String KanatPass = {read = FKanatPass, write = FKanatPass};
 };
 
 // ---------------------------------------------------------------------------

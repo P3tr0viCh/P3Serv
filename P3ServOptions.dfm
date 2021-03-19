@@ -48,7 +48,7 @@ object frmOptions: TfrmOptions
     Top = 8
     Width = 450
     Height = 316
-    ActivePage = tsDomna
+    ActivePage = tsKanat
     MultiLine = True
     TabOrder = 0
     object tsMain: TTabSheet
@@ -330,6 +330,48 @@ object frmOptions: TfrmOptions
         Height = 17
         Caption = #1042#1083#1072#1078#1085#1086#1089#1090#1100
         TabOrder = 5
+      end
+    end
+    object tsKanat: TTabSheet
+      Caption = #1050#1072#1085#1072#1090#1085#1072#1103' '#1076#1086#1088#1086#1075#1072
+      ImageIndex = 2
+      object eKanatScaleNum: TLabeledEdit
+        Left = 8
+        Top = 32
+        Width = 121
+        Height = 29
+        EditLabel.Width = 92
+        EditLabel.Height = 21
+        EditLabel.Caption = #1053#1086#1084#1077#1088' '#1074#1077#1089#1086#1074
+        TabOrder = 0
+      end
+      object eKanatDatabase: TLabeledEdit
+        Left = 8
+        Top = 92
+        Width = 386
+        Height = 29
+        EditLabel.Width = 89
+        EditLabel.Height = 21
+        EditLabel.Caption = #1041#1072#1079#1072' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+      end
+      object btnKanatDatabase: TButton
+        Left = 404
+        Top = 92
+        Width = 30
+        Height = 29
+        Caption = '...'
+        TabOrder = 2
+        OnClick = btnAglodozaDatabaseClick
+      end
+      object btnCheckKanat: TButton
+        Left = 8
+        Top = 132
+        Width = 96
+        Height = 32
+        Caption = #1055#1088#1086#1074#1077#1088#1082#1072
+        TabOrder = 3
+        OnClick = btnCheckMySQLClick
       end
     end
   end

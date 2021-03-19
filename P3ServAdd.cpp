@@ -24,48 +24,44 @@ void CheckSettings(TSettings * Settings) {
 		throw EIniFileException(Format(IDS_LOG_ERROR_CHECK_SETTINGS, "mysql"));
 	}
 
+	int ScaleNum;
+	String Database = "";
+	String ProgramMode = "";
+
 	switch (Settings->ProgramMode) {
 	case pmAglodoza:
-		if (Settings->AglodozaScaleNum == 0 ||
-			IsEmpty(Settings->AglodozaDatabase)) {
-			throw EIniFileException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
-				"aglodoza"));
-		}
-
-		if (!FileExists(Settings->AglodozaDatabase)) {
-			throw EFileNotFoundException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
-				"aglodoza (database not exists)"));
-		}
-
-		break;
-	case pmKoksohim:
-		if (Settings->KoksohimScaleNum == 0 ||
-			IsEmpty(Settings->KoksohimDatabase)) {
-			throw EIniFileException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
-				"koksohim"));
-		}
-
-		if (!FileExists(Settings->KoksohimDatabase)) {
-			throw EFileNotFoundException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
-				"koksohim (database not exists)"));
-		}
-
+		ScaleNum = Settings->AglodozaScaleNum;
+		Database = Settings->AglodozaDatabase;
+		ProgramMode = "aglodoza";
 		break;
 	case pmDomna:
-		if (Settings->DomnaScaleNum == 0 || IsEmpty(Settings->DomnaDatabase)) {
-			throw EIniFileException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
-				"domna"));
-		}
-
-		if (!FileExists(Settings->DomnaDatabase)) {
-			throw EFileNotFoundException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
-				"domna (database not exists)"));
-		}
-
+		ScaleNum = Settings->DomnaScaleNum;
+		Database = Settings->DomnaDatabase;
+		ProgramMode = "domna";
+		break;
+	case pmKoksohim:
+		ScaleNum = Settings->KoksohimScaleNum;
+		Database = Settings->KoksohimDatabase;
+		ProgramMode = "koksohim";
+		break;
+	case pmKanat:
+		ScaleNum = Settings->KanatScaleNum;
+		Database = Settings->KanatDatabase;
+		ProgramMode = "kanat";
 		break;
 	default:
 		throw EIniFileException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
 			"program mode"));
+	}
+
+	if (ScaleNum == 0 || IsEmpty(Database)) {
+		throw EIniFileException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
+			ProgramMode));
+	}
+
+	if (!FileExists(Database)) {
+		throw EFileNotFoundException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
+			ProgramMode + " (database not exists)"));
 	}
 }
 
@@ -90,6 +86,11 @@ String GetAccessConnectionString(TSettings * Settings) {
 		Database = Settings->DomnaDatabase;
 		User = Settings->DomnaUser;
 		Pass = Settings->DomnaPass;
+		break;
+	case pmKanat:
+		Database = Settings->KanatDatabase;
+		User = Settings->KanatUser;
+		Pass = Settings->KanatPass;
 		break;
 	default:
 		throw Exception("GetAccessConnectionString");

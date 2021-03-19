@@ -9,9 +9,9 @@
 #include "P3ServStrings.h"
 
 // ---------------------------------------------------------------------------
+USEFORM("P3ServLogin.cpp", frmLogin);
 USEFORM("P3ServMain.cpp", Main);
 USEFORM("P3ServOptions.cpp", frmOptions);
-USEFORM("P3ServLogin.cpp", frmLogin);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
 	HANDLE hMutex;

@@ -111,8 +111,8 @@
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Debug>true</VerInfo_Debug>
         <Icon_MainIcon>P3Serv_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=П3тр0виЧъ;FileDescription=Передача данных на ИСВС;FileVersion=1.2.0.0;InternalName=P3Serv;LegalCopyright=© П3тр0виЧъ;LegalTrademarks=П3тр0виЧъ;OriginalFilename=P3Serv.exe;ProgramID=ru.p3tr0vich.$(MSBuildProjectName);ProductName=Передача данных на ИСВС;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_MinorVer>2</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=П3тр0виЧъ;FileDescription=Передача данных на ИСВС;FileVersion=1.3.0.0;InternalName=P3Serv;LegalCopyright=© П3тр0виЧъ;LegalTrademarks=П3тр0виЧъ;OriginalFilename=P3Serv.exe;ProgramID=ru.p3tr0vich.$(MSBuildProjectName);ProductName=Передача данных на ИСВС;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>3</VerInfo_MinorVer>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
@@ -125,10 +125,10 @@
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Icon_MainIcon>P3Serv_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=П3тр0виЧъ;FileDescription=Передача данных на ИСВС;FileVersion=1.2.0.0;InternalName=P3Serv;LegalCopyright=© П3тр0виЧъ;LegalTrademarks=П3тр0виЧъ;OriginalFilename=P3Serv.exe;ProgramID=ru.p3tr0vich.$(MSBuildProjectName);ProductName=Передача данных на ИСВС;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=П3тр0виЧъ;FileDescription=Передача данных на ИСВС;FileVersion=1.3.0.0;InternalName=P3Serv;LegalCopyright=© П3тр0виЧъ;LegalTrademarks=П3тр0виЧъ;OriginalFilename=P3Serv.exe;ProgramID=ru.p3tr0vich.$(MSBuildProjectName);ProductName=Передача данных на ИСВС;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <LinkPackageStatics>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;VclSmp.lib;vclx.lib</LinkPackageStatics>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_MinorVer>2</VerInfo_MinorVer>
+        <VerInfo_MinorVer>3</VerInfo_MinorVer>
     </PropertyGroup>
     <ItemGroup>
         <CppCompile Include="..\!UtilsAndComps\AboutFrm.cpp">
@@ -212,6 +212,10 @@
             <DependentOn>mainfunctions\P3ServMainFunctionKoksohim.h</DependentOn>
             <BuildOrder>35</BuildOrder>
         </CppCompile>
+        <CppCompile Include="mainfunctions\P3ServMainFunctionWD30.cpp">
+            <DependentOn>mainfunctions\P3ServMainFunctionWD30.h</DependentOn>
+            <BuildOrder>39</BuildOrder>
+        </CppCompile>
         <CppCompile Include="P3Serv.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
@@ -284,6 +288,18 @@
         <CppCompile Include="records\P3ServTKoksohimRecord.cpp">
             <DependentOn>records\P3ServTKoksohimRecord.h</DependentOn>
             <BuildOrder>32</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="records\P3ServTWD30SensorsRecord.cpp">
+            <DependentOn>records\P3ServTWD30SensorsRecord.h</DependentOn>
+            <BuildOrder>42</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="records\P3ServTWD30TRecord.cpp">
+            <DependentOn>records\P3ServTWD30TRecord.h</DependentOn>
+            <BuildOrder>41</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="records\P3ServTWD30ZRecord.cpp">
+            <DependentOn>records\P3ServTWD30ZRecord.h</DependentOn>
+            <BuildOrder>40</BuildOrder>
         </CppCompile>
         <FormResources Include="P3ServLogin.dfm"/>
         <FormResources Include="P3ServMain.dfm"/>

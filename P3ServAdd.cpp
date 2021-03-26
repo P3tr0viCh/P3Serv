@@ -27,6 +27,7 @@ void CheckSettings(TSettings * Settings) {
 	int ScaleNum;
 	String Database = "";
 	String ProgramMode = "";
+	bool CheckFile = true;
 
 	switch (Settings->ProgramMode) {
 	case pmAglodoza:
@@ -49,6 +50,12 @@ void CheckSettings(TSettings * Settings) {
 		Database = Settings->KanatDatabase;
 		ProgramMode = "kanat";
 		break;
+	case pmWD30:
+		ScaleNum = Settings->WD30ScaleNum;
+		Database = Settings->WD30Logs;
+		ProgramMode = "wd30";
+		CheckFile = false;
+		break;
 	default:
 		throw EIniFileException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
 			"program mode"));
@@ -59,9 +66,18 @@ void CheckSettings(TSettings * Settings) {
 			ProgramMode));
 	}
 
-	if (!FileExists(Database)) {
-		throw EFileNotFoundException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
-			ProgramMode + " (database not exists)"));
+	if (CheckFile) {
+		if (!FileExists(Database)) {
+			throw EFileNotFoundException(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
+				ProgramMode + " (database not exists)"));
+		}
+	}
+	else {
+		if (!DirectoryExists(Database)) {
+			throw EDirectoryNotFoundException
+				(Format(IDS_LOG_ERROR_CHECK_SETTINGS,
+				ProgramMode + " (log directory not exists)"));
+		}
 	}
 }
 

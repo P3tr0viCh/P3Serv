@@ -48,7 +48,7 @@ object frmOptions: TfrmOptions
     Top = 8
     Width = 450
     Height = 316
-    ActivePage = tsKanat
+    ActivePage = tsWD30
     MultiLine = True
     TabOrder = 0
     object tsMain: TTabSheet
@@ -372,6 +372,49 @@ object frmOptions: TfrmOptions
         Caption = #1055#1088#1086#1074#1077#1088#1082#1072
         TabOrder = 3
         OnClick = btnCheckMySQLClick
+      end
+    end
+    object tsWD30: TTabSheet
+      Caption = #1046#1044' '#1074#1077#1089#1099' '#1042#1044'-30'
+      ImageIndex = 6
+      object eWD30ScaleNum: TLabeledEdit
+        Left = 8
+        Top = 32
+        Width = 121
+        Height = 29
+        EditLabel.Width = 92
+        EditLabel.Height = 21
+        EditLabel.Caption = #1053#1086#1084#1077#1088' '#1074#1077#1089#1086#1074
+        TabOrder = 0
+      end
+      object eWD30Logs: TLabeledEdit
+        Left = 8
+        Top = 92
+        Width = 386
+        Height = 29
+        EditLabel.Width = 149
+        EditLabel.Height = 21
+        EditLabel.Caption = #1056#1072#1089#1087#1086#1083#1086#1078#1077#1085#1080#1077' '#1083#1086#1075#1086#1074
+        TabOrder = 1
+      end
+      object btnCheckWD30: TButton
+        Left = 8
+        Top = 132
+        Width = 96
+        Height = 32
+        Caption = #1055#1088#1086#1074#1077#1088#1082#1072
+        TabOrder = 3
+        Visible = False
+        OnClick = btnCheckMySQLClick
+      end
+      object btnWD30Logs: TButton
+        Left = 404
+        Top = 92
+        Width = 30
+        Height = 29
+        Caption = '...'
+        TabOrder = 2
+        OnClick = btnWD30LogsClick
       end
     end
   end

@@ -3,6 +3,8 @@
 #include <vcl.h>
 #pragma hdrstop
 
+#include <FileCtrl.hpp>
+
 #include <UtilsLog.h>
 #include <UtilsStr.h>
 #include <UtilsMisc.h>
@@ -47,12 +49,15 @@ bool TfrmOptions::Show(TSettings * Settings) {
 void __fastcall TfrmOptions::FormCreate(TObject *Sender) {
 	Settings = new TSettings();
 
+#ifndef _DEBUG
 	PageControl->ActivePageIndex = 0;
+#endif
 
 	rgProgramMode->Items->AddObject(tsAglodoza->Caption, (TObject*)pmAglodoza);
 	rgProgramMode->Items->AddObject(tsDomna->Caption, (TObject*)pmDomna);
 	rgProgramMode->Items->AddObject(tsKoksohim->Caption, (TObject*)pmKoksohim);
 	rgProgramMode->Items->AddObject(tsKanat->Caption, (TObject*)pmKanat);
+	rgProgramMode->Items->AddObject(tsWD30->Caption, (TObject*)pmWD30);
 
 	btnCheckMySQL->Tag = pmUnknown;
 	btnCheckAglodoza->Tag = pmAglodoza;
@@ -118,6 +123,9 @@ void TfrmOptions::UpdateForm() {
 
 	eKanatScaleNum->Text = IntToStr(Settings->KanatScaleNum);
 	eKanatDatabase->Text = Settings->KanatDatabase;
+
+	eWD30ScaleNum->Text = IntToStr(Settings->WD30ScaleNum);
+	eWD30Logs->Text = Settings->WD30Logs;
 }
 
 // ---------------------------------------------------------------------------
@@ -148,6 +156,9 @@ void TfrmOptions::UpdateSettings() {
 
 	Settings->KanatScaleNum = StrToInt(eKanatScaleNum->Text);
 	Settings->KanatDatabase = eKanatDatabase->Text;
+
+	Settings->WD30ScaleNum = StrToInt(eWD30ScaleNum->Text);
+	Settings->WD30Logs = eWD30Logs->Text;
 }
 
 void TfrmOptions::ControlSetFocus(TWinControl * Control) {
@@ -207,6 +218,25 @@ bool TfrmOptions::CheckFileExists(TCustomEdit * Edit) {
 	}
 }
 
+bool TfrmOptions::CheckFolderExists(TCustomEdit * Edit) {
+	if (Edit == NULL) {
+		return true;
+	}
+
+	if (DirectoryExists(Edit->Text)) {
+		return true;
+	}
+
+	if (MsgBoxYesNo(Format(IDS_ERROR_LOCAL_DB_NOT_EXISTS, Edit->Text))) {
+		return true;
+	}
+	else {
+		ControlSetFocus(Edit);
+
+		return false;
+	}
+}
+
 // ---------------------------------------------------------------------------
 void __fastcall TfrmOptions::btnOkClick(TObject *Sender) {
 	if (!AnsiSameStr(eOptionsPass->Text, eOptionsPass2->Text)) {
@@ -219,6 +249,8 @@ void __fastcall TfrmOptions::btnOkClick(TObject *Sender) {
 
 	TCustomEdit * eScaleNum;
 	TCustomEdit * eDatabase;
+
+	bool CheckFile = true;
 
 	switch (rgProgramMode->ItemIndex + 1) {
 	case pmAglodoza:
@@ -237,20 +269,33 @@ void __fastcall TfrmOptions::btnOkClick(TObject *Sender) {
 		eScaleNum = eKanatScaleNum;
 		eDatabase = eKanatDatabase;
 		break;
+	case pmWD30:
+		eScaleNum = eWD30ScaleNum;
+		eDatabase = eWD30Logs;
+		CheckFile = false;
+		break;
 	}
 
 	if (!CheckEdit(eScaleNum, IDS_ERROR_NEED_INT)) {
 		return;
 	}
 
-	if (!CheckFileExists(eDatabase)) {
-		return;
+	if (CheckFile) {
+		if (!CheckFileExists(eDatabase)) {
+			return;
+		}
+	}
+	else {
+		if (!CheckFolderExists(eDatabase)) {
+			return;
+		}
 	}
 
 	CheckEmptyEditNum(eAglodozaScaleNum);
 	CheckEmptyEditNum(eDomnaScaleNum);
 	CheckEmptyEditNum(eKoksohimScaleNum);
 	CheckEmptyEditNum(eKanatScaleNum);
+	CheckEmptyEditNum(eWD30ScaleNum);
 
 	UpdateSettings();
 
@@ -279,6 +324,15 @@ void __fastcall TfrmOptions::btnAglodozaDatabaseClick(TObject *Sender) {
 			eKanatDatabase->Text = OpenDialog->FileName;
 			break;
 		}
+	}
+}
+
+// ---------------------------------------------------------------------------
+void __fastcall TfrmOptions::btnWD30LogsClick(TObject *Sender) {
+	String Path = eWD30Logs->Text;
+
+	if (SelectDirectory("", "", Path)) {
+		eWD30Logs->Text = Path;
 	}
 }
 
@@ -317,6 +371,10 @@ void __fastcall TfrmOptions::btnCheckMySQLClick(TObject *Sender) {
 				Database = "kanat";
 				Settings->ProgramMode = pmKanat;
 				OpenAccessConnection(Settings, Connection);
+				break;
+			case pmWD30:
+				Database = "wd30";
+				Settings->ProgramMode = pmWD30;
 				break;
 			default:
 				return;

@@ -23,6 +23,7 @@
 #include "P3ServMainFunctionDomna.h"
 #include "P3ServMainFunctionKoksohim.h"
 #include "P3ServMainFunctionKanat.h"
+#include "P3ServMainFunctionWD30.h"
 
 #include "P3ServLogin.h"
 #include "P3ServOptions.h"
@@ -252,6 +253,9 @@ void TMain::MainFunction() {
 				break;
 			case pmKanat:
 				MainFunctionKanat(Settings);
+				break;
+			case pmWD30:
+				MainFunctionWD30(Settings);
 				break;
 			default:
 				throw Exception("check settings");

@@ -59,12 +59,18 @@ __published:
 	TButton *btnCheckDomna;
 	TButton *btnCheckKoksohim;
 	TButton *btnCheckKanat;
+	TTabSheet *tsWD30;
+	TLabeledEdit *eWD30ScaleNum;
+	TLabeledEdit *eWD30Logs;
+	TButton *btnCheckWD30;
+	TButton *btnWD30Logs;
 
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall btnOkClick(TObject *Sender);
 	void __fastcall btnAglodozaDatabaseClick(TObject *Sender);
 	void __fastcall btnCheckMySQLClick(TObject *Sender);
+	void __fastcall btnWD30LogsClick(TObject *Sender);
 
 private:
 	TSettings * Settings;
@@ -74,6 +80,7 @@ private:
 	void CheckEmptyEditNum(TCustomEdit * Edit);
 	bool CheckEdit(TCustomEdit * Edit, NativeUInt Message);
 	bool CheckFileExists(TCustomEdit * Edit);
+	bool CheckFolderExists(TCustomEdit * Edit);
 
 	void UpdateForm();
 	void UpdateSettings();

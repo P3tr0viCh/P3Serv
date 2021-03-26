@@ -57,6 +57,9 @@ __fastcall TSettings::TSettings() {
 	FKanatDatabase = "";
 	FKanatUser = "Admin";
 	FKanatPass = "";
+
+	FWD30ScaleNum = 0;
+	FWD30Logs = "C:\\WSys32d\\Log";
 }
 
 // ---------------------------------------------------------------------------
@@ -129,6 +132,11 @@ bool __fastcall TSettings::Equals(TObject * Obj) {
 	if (Settings->KanatPass != KanatPass)
 		return false;
 
+	if (Settings->WD30ScaleNum != WD30ScaleNum)
+		return false;
+	if (Settings->WD30Logs != WD30Logs)
+		return false;
+
 	return true;
 }
 
@@ -165,6 +173,9 @@ void __fastcall TSettings::Assign(TSettings * Source) {
 	FKanatDatabase = Source->KanatDatabase;
 	FKanatUser = Source->KanatUser;
 	FKanatPass = Source->KanatPass;
+
+	FWD30ScaleNum = Source->WD30ScaleNum;
+	FWD30Logs = Source->WD30Logs;
 }
 
 // ---------------------------------------------------------------------------
@@ -190,6 +201,7 @@ String __fastcall TSettings::ToString() {
 	S += "MySQLUser='" + MySQLUser + "'";
 	S += ",";
 	S += "MySQLPass='" + MySQLPass + "'";
+
 	S += ",";
 
 	S += "AglodozaScaleNum='" + IntToStr(AglodozaScaleNum) + "'";
@@ -217,6 +229,7 @@ String __fastcall TSettings::ToString() {
 	S += "KoksohimScaleNum='" + IntToStr(KoksohimScaleNum) + "'";
 	S += ",";
 	S += "KoksohimDatabase='" + KoksohimDatabase + "'";
+
 	S += ",";
 
 	S += "KanatScaleNum='" + IntToStr(KanatScaleNum) + "'";
@@ -226,6 +239,12 @@ String __fastcall TSettings::ToString() {
 	S += "KanatUser='" + KanatUser + "'";
 	S += ",";
 	S += "KanatPass='" + KanatPass + "'";
+
+	S += ",";
+
+	S += "WD30ScaleNum='" + IntToStr(WD30ScaleNum) + "'";
+	S += ",";
+	S += "WD30Logs='" + WD30Logs + "'";
 
 	S += "}";
 
@@ -329,6 +348,7 @@ void TSettings::LoadSettings() {
 			DomnaScaleNum);
 		KanatScaleNum = IniFile->ReadInteger(Section, "KanatNum",
 			KanatScaleNum);
+		WD30ScaleNum = IniFile->ReadInteger(Section, "WD30Num", WD30ScaleNum);
 
 		Section = "MySQLConnection";
 		MySQLHost = IniFile->ReadString(Section, "Host", MySQLHost);
@@ -359,6 +379,9 @@ void TSettings::LoadSettings() {
 		KanatUser = IniFile->ReadString(Section, "User", KanatUser);
 		KanatPass = Decrypt(IniFile->ReadString(Section, "Pass", KanatPass));
 
+		Section = "WD30Connection";
+		WD30Logs = IniFile->ReadString(Section, "Logs", WD30Logs);
+
 #ifdef CHECK_CRC
 		CheckCRC(IniFile->ReadString("CRC", "CRC", ""));
 #endif
@@ -388,6 +411,7 @@ void TSettings::SaveSettings() {
 		IniFile->WriteString(Section, "DomnaNum", DomnaScaleNum);
 		IniFile->WriteString(Section, "KoksohimNum", KoksohimScaleNum);
 		IniFile->WriteString(Section, "KanatNum", KanatScaleNum);
+		IniFile->WriteString(Section, "WD30Num", WD30ScaleNum);
 
 		Section = "MySQLConnection";
 		IniFile->WriteString(Section, "Host", MySQLHost);
@@ -414,6 +438,9 @@ void TSettings::SaveSettings() {
 		IniFile->WriteString(Section, "Database", KanatDatabase);
 		IniFile->WriteString(Section, "User", KanatUser);
 		IniFile->WriteString(Section, "Pass", Encrypt(KanatPass));
+
+		Section = "WD30Connection";
+		IniFile->WriteString(Section, "Logs", WD30Logs);
 	}
 	__finally {
 		delete IniFile;

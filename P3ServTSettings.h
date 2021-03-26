@@ -12,7 +12,7 @@
 
 // ---------------------------------------------------------------------------
 enum TProgramMode {
-	pmUnknown, pmAglodoza, pmDomna, pmKoksohim, pmKanat
+	pmUnknown, pmAglodoza, pmDomna, pmKoksohim, pmKanat, pmWD30
 };
 
 // ---------------------------------------------------------------------------
@@ -53,6 +53,9 @@ private:
 	String FKanatDatabase;
 	String FKanatUser;
 	String FKanatPass;
+	// ÂÄ-30
+	int FWD30ScaleNum;
+	String FWD30Logs;
 
 	String GetConfigFileName();
 
@@ -125,6 +128,9 @@ public:
 		read = FKanatDatabase, write = FKanatDatabase};
 	__property String KanatUser = {read = FKanatUser, write = FKanatUser};
 	__property String KanatPass = {read = FKanatPass, write = FKanatPass};
+
+	__property int WD30ScaleNum = {read = FWD30ScaleNum, write = FWD30ScaleNum};
+	__property String WD30Logs = {read = FWD30Logs, write = FWD30Logs};
 };
 
 // ---------------------------------------------------------------------------

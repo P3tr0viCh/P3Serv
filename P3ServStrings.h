@@ -52,6 +52,7 @@
 #define IDS_LOG_DOMNA_DATA_SAVED					2201
 #define IDS_LOG_KOKSOHIM_DATA_SAVED					2202
 #define IDS_LOG_KANAT_DATA_SAVED					2203
+#define IDS_LOG_WD30_DATA_SAVED                     2204
 
 #define IDS_LOG_LOGIN_OK							2300
 #define IDS_LOG_LOGIN_CANCEL						2301
@@ -67,6 +68,9 @@
 #define IDS_SQL_SET									3006
 #define IDS_SQL_VALUES								3007
 #define IDS_SQL_AND									3008
+#define IDS_SQL_ORDER								3009
+#define IDS_SQL_DESC								3010
+#define IDS_SQL_LIMIT_1								3011
 
 #define IDS_SQL_TABLE_AGLODOZA_DOZSUM				3100
 #define IDS_SQL_TABLE_AGLODOZA_GROUPSUM				3101
@@ -81,6 +85,9 @@
 #define IDS_SQL_TABLE_KOKSOHIM_MYSQL				3300
 #define IDS_SQL_TABLE_KANAT_MEASURES				3400
 #define IDS_SQL_TABLE_KANAT_MYSQL					3401
+#define IDS_SQL_TABLE_WD30_Z_MYSQL					3500
+#define IDS_SQL_TABLE_WD30_T_MYSQL					3501
+#define IDS_SQL_TABLE_WD30_S_MYSQL					3502
 
 // ---------------------------------------------------------------------------
 #endif

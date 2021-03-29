@@ -192,6 +192,11 @@ String DateTimeToKoksohimSyncStr(TDateTime ADateTime) {
 }
 
 // ---------------------------------------------------------------------------
+String DateTimeToWD30SyncStr(TDateTime ADateTime) {
+	return FormatDateTime("yyyyMMddhhnnss", ADateTime);
+}
+
+// ---------------------------------------------------------------------------
 String FloatToSQLStr(float Value) {
 	return StringReplace(FloatToStr(Value), COMMA, DOT, TReplaceFlags());
 }

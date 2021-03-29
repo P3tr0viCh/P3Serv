@@ -273,9 +273,10 @@ void MainFunctionKoksohim(TSettings * Settings) {
 				IncYear(Records->Items[i]->DateTime, 1);
 		}
 
+		String ID;
 		// Сохраняем
 		for (int i = 0; i < Records->Count; i++) {
-			String ID = DateTimeToKoksohimSyncStr(Records->Items[i]->DateTime);
+			ID = DateTimeToKoksohimSyncStr(Records->Items[i]->DateTime);
 			ID += IntToStr(Records->Items[i]->DozatorNum);
 
 			if (!SyncList->Find(ID, NU)) {

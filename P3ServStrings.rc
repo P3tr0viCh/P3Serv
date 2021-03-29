@@ -90,6 +90,8 @@ IDS_LOG_KOKSOHIM_DATA_SAVED,
         "data saved, count=%d (%s)"
 IDS_LOG_KANAT_DATA_SAVED,
         "data saved, count=%d (%s)"
+IDS_LOG_WD30_DATA_SAVED,
+        "data saved, count=z:%d|t:%d|s:%d (%s)"
 
 IDS_LOG_LOGIN_OK,
         "login: ok"
@@ -109,6 +111,9 @@ IDS_SQL_WHERE,                  "WHERE"
 IDS_SQL_SET,                    "SET"
 IDS_SQL_VALUES,                 "VALUES"
 IDS_SQL_AND,                    "AND"
+IDS_SQL_ORDER,                  "ORDER BY"
+IDS_SQL_DESC,                   "DESC"
+IDS_SQL_LIMIT_1,                "LIMIT 1"
 
 IDS_SQL_TABLE_AGLODOZA_DOZSUM,          "DozatorSum"
 IDS_SQL_TABLE_AGLODOZA_GROUPSUM,        "GroupSum"
@@ -123,5 +128,8 @@ IDS_SQL_TABLE_DOMNA_MYSQL,              "dpb"
 IDS_SQL_TABLE_KOKSOHIM_MYSQL,           "koksohim"
 IDS_SQL_TABLE_KANAT_MEASURES,           "Measures"
 IDS_SQL_TABLE_KANAT_MYSQL,              "kanatb"
+IDS_SQL_TABLE_WD30_Z_MYSQL,             "wd30log_z"
+IDS_SQL_TABLE_WD30_T_MYSQL,             "wd30log_t"
+IDS_SQL_TABLE_WD30_S_MYSQL,             "wd30log_s"
 
 END

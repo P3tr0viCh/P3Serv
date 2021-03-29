@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 
-#ifndef P3ServTWD30SensorsRecordH
-#define P3ServTWD30SensorsRecordH
+#ifndef P3ServTWD30SRecordH
+#define P3ServTWD30SRecordH
 
 #include <System.Classes.hpp>
 
@@ -11,7 +11,7 @@
 #include "P3ServTWD30TRecord.h"
 
 // ---------------------------------------------------------------------------
-class TWD30SensorsRecord : public TObject {
+class TWD30SRecord : public TObject {
 private:
 	TDateTime FDateTime;
 
@@ -19,8 +19,8 @@ private:
 	TWD30TRecord * FWD30TRecord;
 
 public:
-	__fastcall TWD30SensorsRecord();
-	__fastcall ~TWD30SensorsRecord();
+	__fastcall TWD30SRecord();
+	__fastcall ~TWD30SRecord();
 
 	bool __fastcall Equals(TObject * Obj);
 	void __fastcall Assign(TObject * Source);
@@ -33,7 +33,7 @@ public:
 };
 
 // ---------------------------------------------------------------------------
-typedef TObjList<TWD30SensorsRecord>TWD30SensorsRecordList;
+typedef TObjList<TWD30SRecord>TWD30SRecordList;
 
 // ---------------------------------------------------------------------------
 #endif

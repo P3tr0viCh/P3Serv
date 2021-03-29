@@ -150,8 +150,8 @@ void WD30Load(String LogName, TWD30ZRecordList * ZRecords,
 
 			X = S[WD30_LOG_DATETIME + 2];
 
-			// ----------- Нули ----------------------------------------------
-			// Под каждое значение отведено 7 символов
+			// ----------- РќСѓР»Рё ----------------------------------------------
+			// РџРѕРґ РєР°Р¶РґРѕРµ Р·РЅР°С‡РµРЅРёРµ РѕС‚РІРµРґРµРЅРѕ 7 СЃРёРјРІРѕР»РѕРІ
 
 			if (X == 'Z') {
 				D = S.SubString(1, WD30_LOG_DATETIME);
@@ -179,8 +179,8 @@ void WD30Load(String LogName, TWD30ZRecordList * ZRecords,
 				continue;
 			}
 
-			// ----------- Температуры ---------------------------------------
-			// Температура дублируется, разница - 1 пробел и 2 пробела
+			// ----------- РўРµРјРїРµСЂР°С‚СѓСЂС‹ ---------------------------------------
+			// РўРµРјРїРµСЂР°С‚СѓСЂР° РґСѓР±Р»РёСЂСѓРµС‚СЃСЏ, СЂР°Р·РЅРёС†Р° - 1 РїСЂРѕР±РµР» Рё 2 РїСЂРѕР±РµР»Р°
 
 			if (X == 'T') {
 				if (S.Length() < WD30_LOG_DATETIME + 4) {
@@ -224,8 +224,8 @@ void WD30Load(String LogName, TWD30ZRecordList * ZRecords,
 				continue;
 			}
 
-			// ----------- Датчики -------------------------------------------
-			// После даты идёт ещё одна дата, начинается с цифры
+			// ----------- Р”Р°С‚С‡РёРєРё -------------------------------------------
+			// РџРѕСЃР»Рµ РґР°С‚С‹ РёРґС‘С‚ РµС‰С‘ РѕРґРЅР° РґР°С‚Р°, РЅР°С‡РёРЅР°РµС‚СЃСЏ СЃ С†РёС„СЂС‹
 			if (IsDigit(X)) {
 				P = S.Pos(" LocPos ");
 			}
@@ -646,19 +646,14 @@ int __fastcall SortLogsByDateTime(TStringList * List, int Index1, int Index2) {
 	// 0000000001111111
 	// 1234567890123456
 	// _01012020_155358
-	try {
-		return CompareDateTime(EncodeDateTime(StrToInt(S1.SubString(6, 4)),
-			StrToInt(S1.SubString(4, 2)), StrToInt(S1.SubString(2, 2)),
-			StrToInt(S1.SubString(11, 2)), StrToInt(S1.SubString(13, 2)),
-			StrToInt(S1.SubString(15, 2)), 0),
-			EncodeDateTime(StrToInt(S2.SubString(6, 4)),
-			StrToInt(S2.SubString(4, 2)), StrToInt(S2.SubString(2, 2)),
-			StrToInt(S2.SubString(11, 2)), StrToInt(S2.SubString(13, 2)),
-			StrToInt(S2.SubString(15, 2)), 0));
-	}
-	catch (...) {
-		return 0;
-	}
+	return CompareDateTime(EncodeDateTime(StrToInt(S1.SubString(6, 4)),
+		StrToInt(S1.SubString(4, 2)), StrToInt(S1.SubString(2, 2)),
+		StrToInt(S1.SubString(11, 2)), StrToInt(S1.SubString(13, 2)),
+		StrToInt(S1.SubString(15, 2)), 0),
+		EncodeDateTime(StrToInt(S2.SubString(6, 4)),
+		StrToInt(S2.SubString(4, 2)), StrToInt(S2.SubString(2, 2)),
+		StrToInt(S2.SubString(11, 2)), StrToInt(S2.SubString(13, 2)),
+		StrToInt(S2.SubString(15, 2)), 0));
 }
 
 // ---------------------------------------------------------------------------
@@ -691,7 +686,11 @@ void MainFunctionWD30(TSettings * Settings) {
 
 	try {
 		WD30FindLogs(Settings->WD30Logs, LogFiles);
-		LogFiles->CustomSort(SortLogsByDateTime);
+		try {
+			LogFiles->CustomSort(SortLogsByDateTime);
+		}
+		catch (...) {
+		}
 
 		WD30LoadSyncList(LogFilesSyncList, 0);
 		WD30LoadSyncList(ZSyncList, 1);
@@ -718,7 +717,7 @@ void MainFunctionWD30(TSettings * Settings) {
 
 			WD30Load(LogName, ZRecords, TRecords, SRecords);
 
-			// ----------- Нули ----------------------------------------------
+			// ----------- РќСѓР»Рё ----------------------------------------------
 			for (int i = 0; i < ZRecords->Count; i++) {
 				SyncID = DateTimeToWD30SyncStr(ZRecords->Items[i]->DateTime);
 
@@ -743,7 +742,7 @@ void MainFunctionWD30(TSettings * Settings) {
 				}
 			}
 
-			// ----------- Температуры ---------------------------------------
+			// ----------- РўРµРјРїРµСЂР°С‚СѓСЂС‹ ---------------------------------------
 			for (int i = 0; i < TRecords->Count; i++) {
 				SyncID = DateTimeToWD30SyncStr(TRecords->Items[i]->DateTime);
 
@@ -768,7 +767,7 @@ void MainFunctionWD30(TSettings * Settings) {
 				}
 			}
 
-			// ----------- Датчики -------------------------------------------
+			// ----------- Р”Р°С‚С‡РёРєРё -------------------------------------------
 			for (int i = 0; i < SRecords->Count; i++) {
 				SyncID = DateTimeToWD30SyncStr(SRecords->Items[i]->DateTime);
 

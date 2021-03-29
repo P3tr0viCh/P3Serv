@@ -41,6 +41,7 @@ void SQLExec(TADOQuery * Query);
 // ---------------------------------------------------------------------------
 String DateTimeToSQLStr(TDateTime ADateTime);
 String DateTimeToKoksohimSyncStr(TDateTime ADateTime);
+String DateTimeToWD30SyncStr(TDateTime ADateTime);
 String FloatToSQLStr(float Value);
 
 // ---------------------------------------------------------------------------

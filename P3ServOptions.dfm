@@ -48,7 +48,7 @@ object frmOptions: TfrmOptions
     Top = 8
     Width = 450
     Height = 316
-    ActivePage = tsWD30
+    ActivePage = tsMain
     MultiLine = True
     TabOrder = 0
     object tsMain: TTabSheet

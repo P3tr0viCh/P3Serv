@@ -41,7 +41,7 @@ void WD30LoadSyncList(TStringList * SyncList, int W) {
 		SyncFileName = SYNC_WD30S;
 		break;
 	default:
-		throw EArgumentOutOfRangeException(W);
+		throw EArgumentOutOfRangeException(IntToStr(W));
 	}
 
 	String FileName = GetSyncFileFullName(SyncFileName);
@@ -293,167 +293,11 @@ void WD30Load(String LogName, TWD30ZRecordList * ZRecords,
 }
 
 // ---------------------------------------------------------------------------
-void WD30ZSaveToServer(TSettings * Settings, TWD30ZRecord * Record,
-	TADOQuery * Query, bool UseInsert) {
-	Query->SQL->Clear();
-
-	String Name;
-
-	if (UseInsert) {
-		String Columns = "scales, bdatetime";
-		String Params = ":scales, :bdatetime";
-
-		for (int i = 1; i <= WD30_Z_COUNT; i++) {
-			if (Record->Z[i] != WD30_Z_NULL_VALUE) {
-				Name = "m" + IntToStr(i);
-				Columns = Columns + ", " + Name;
-				Params = Params + ", " + ":" + Name;
-			}
-		}
-
-		SQLAdd(Query, IDS_SQL_INSERT);
-		SQLAdd(Query, IDS_SQL_TABLE_WD30_Z_MYSQL);
-		SQLAdd(Query, "(" + Columns + ")");
-		SQLAdd(Query, IDS_SQL_VALUES);
-		SQLAdd(Query, "(" + Params + ")");
-
-		// WriteToLog(Query->SQL->Text);
-
-		SQLSetParam(Query, "scales", Settings->WD30ScaleNum);
-		SQLSetParam(Query, "bdatetime", Record->DateTime);
-
-		for (int i = 1; i <= WD30_Z_COUNT; i++) {
-			if (Record->Z[i] != WD30_Z_NULL_VALUE) {
-				Name = "m" + IntToStr(i);
-				SQLSetParam(Query, Name, Record->Z[i]);
-			}
-		}
-	}
-	else {
-		String Values = "";
-
-		for (int i = 1; i <= WD30_Z_COUNT; i++) {
-			Name = "m" + IntToStr(i);
-			Values = Values + ", " + Name + "=:" + Name;
-		}
-		Values.Delete(1, 2);
-
-		SQLAdd(Query, IDS_SQL_UPDATE);
-		SQLAdd(Query, IDS_SQL_TABLE_WD30_Z_MYSQL);
-		SQLAdd(Query, IDS_SQL_SET);
-		SQLAdd(Query, Values);
-		SQLAdd(Query, IDS_SQL_WHERE);
-		SQLAdd(Query, "scales=:scales");
-		SQLAdd(Query, IDS_SQL_AND);
-		SQLAdd(Query, "bdatetime=:bdatetime");
-
-		// WriteToLog(Query->SQL->Text);
-
-		SQLSetParam(Query, "scales", Settings->WD30ScaleNum);
-		SQLSetParam(Query, "bdatetime", Record->DateTime);
-
-		for (int i = 1; i <= WD30_Z_COUNT; i++) {
-			Name = "m" + IntToStr(i);
-			if (Record->Z[i] != WD30_Z_NULL_VALUE) {
-				SQLSetParam(Query, Name, Record->Z[i]);
-			}
-			else {
-				Query->Parameters->ParamByName(Name)->DataType = ftInteger;
-				Query->Parameters->ParamByName(Name)->Value = Null();
-			}
-		}
-	}
-
-	Query->Prepared = true;
-
-	SQLExec(Query);
-}
-
-// ---------------------------------------------------------------------------
-void WD30TSaveToServer(TSettings * Settings, TWD30TRecord * Record,
-	TADOQuery * Query, bool UseInsert) {
-	Query->SQL->Clear();
-
-	String Name;
-
-	if (UseInsert) {
-		String Columns = "scales, bdatetime";
-		String Params = ":scales, :bdatetime";
-
-		for (int i = 1; i <= WD30_T_COUNT; i++) {
-			if (Record->T[i] != WD30_T_NULL_VALUE) {
-				Name = "t" + IntToStr(i);
-				Columns = Columns + ", " + Name;
-				Params = Params + ", " + ":" + Name;
-			}
-		}
-
-		SQLAdd(Query, IDS_SQL_INSERT);
-		SQLAdd(Query, IDS_SQL_TABLE_WD30_T_MYSQL);
-		SQLAdd(Query, "(" + Columns + ")");
-		SQLAdd(Query, IDS_SQL_VALUES);
-		SQLAdd(Query, "(" + Params + ")");
-
-		// WriteToLog(Query->SQL->Text);
-
-		SQLSetParam(Query, "scales", Settings->WD30ScaleNum);
-		SQLSetParam(Query, "bdatetime", Record->DateTime);
-
-		for (int i = 1; i <= WD30_T_COUNT; i++) {
-			if (Record->T[i] != WD30_T_NULL_VALUE) {
-				Name = "t" + IntToStr(i);
-				SQLSetParam(Query, Name, Record->T[i]);
-			}
-		}
-	}
-	else {
-		String Values = "";
-
-		for (int i = 1; i <= WD30_T_COUNT; i++) {
-			Name = "t" + IntToStr(i);
-			Values = Values + ", " + Name + "=:" + Name;
-		}
-		Values.Delete(1, 2);
-
-		SQLAdd(Query, IDS_SQL_UPDATE);
-		SQLAdd(Query, IDS_SQL_TABLE_WD30_T_MYSQL);
-		SQLAdd(Query, IDS_SQL_SET);
-		SQLAdd(Query, Values);
-		SQLAdd(Query, IDS_SQL_WHERE);
-		SQLAdd(Query, "scales=:scales");
-		SQLAdd(Query, IDS_SQL_AND);
-		SQLAdd(Query, "bdatetime=:bdatetime");
-
-		// WriteToLog(Query->SQL->Text);
-
-		SQLSetParam(Query, "scales", Settings->WD30ScaleNum);
-		SQLSetParam(Query, "bdatetime", Record->DateTime);
-
-		for (int i = 1; i <= WD30_T_COUNT; i++) {
-			Name = "t" + IntToStr(i);
-			if (Record->T[i] != WD30_T_NULL_VALUE) {
-				SQLSetParam(Query, Name, Record->T[i]);
-			}
-			else {
-				Query->Parameters->ParamByName(Name)->DataType = ftFloat;
-				Query->Parameters->ParamByName(Name)->Value = Null();
-			}
-		}
-	}
-
-	Query->Prepared = true;
-
-	SQLExec(Query);
-}
-
-// ---------------------------------------------------------------------------
 bool WD30SLoadFromServer(TSettings * Settings, TWD30SRecord * Record,
 	TADOQuery * Query) {
 	Query->SQL->Clear();
 
 	String Name;
-
-	TDateTime DateTimeEnd = IncMonth(Record->DateTime, -1);
 
 	SQLAdd(Query, IDS_SQL_SELECT);
 	SQLAdd(Query, "*");
@@ -463,8 +307,6 @@ bool WD30SLoadFromServer(TSettings * Settings, TWD30SRecord * Record,
 	SQLAdd(Query, "scales=:scales");
 	SQLAdd(Query, IDS_SQL_AND);
 	SQLAdd(Query, "bdatetime<:bdatetime");
-	SQLAdd(Query, IDS_SQL_AND);
-	SQLAdd(Query, "bdatetime>:bdatetime_end");
 	SQLAdd(Query, IDS_SQL_ORDER);
 	SQLAdd(Query, "bdatetime");
 	SQLAdd(Query, IDS_SQL_DESC);
@@ -474,7 +316,6 @@ bool WD30SLoadFromServer(TSettings * Settings, TWD30SRecord * Record,
 
 	SQLSetParam(Query, "scales", Settings->WD30ScaleNum);
 	SQLSetParam(Query, "bdatetime", Record->DateTime);
-	SQLSetParam(Query, "bdatetime_end", DateTimeEnd);
 
 	Query->Prepared = true;
 
@@ -523,9 +364,42 @@ bool WD30SLoadFromServer(TSettings * Settings, TWD30SRecord * Record,
 }
 
 // ---------------------------------------------------------------------------
-void WD30SSaveToServer(TSettings * Settings, TWD30SRecord * Record,
-	TADOQuery * Query, bool UseInsert) {
+enum TWD30SaveToServer {
+	ssZ, ssT, ssS
+};
+
+// ---------------------------------------------------------------------------
+void WD30SaveToServer(TWD30SaveToServer SaveToServer, TSettings * Settings,
+	TObject * Record, TADOQuery * Query, bool UseInsert) {
 	Query->SQL->Clear();
+
+	TWD30ZRecord * ZRecord;
+	TWD30TRecord * TRecord;
+	TWD30SRecord * SRecord;
+
+	int ScaleNum = Settings->WD30ScaleNum;
+	int TableName;
+	TDateTime DateTime;
+
+	switch (SaveToServer) {
+	case ssZ:
+		ZRecord = (TWD30ZRecord*) Record;
+		TableName = IDS_SQL_TABLE_WD30_Z_MYSQL;
+		DateTime = ZRecord->DateTime;
+		break;
+	case ssT:
+		TRecord = (TWD30TRecord*) Record;
+		TableName = IDS_SQL_TABLE_WD30_T_MYSQL;
+		DateTime = TRecord->DateTime;
+		break;
+	case ssS:
+		SRecord = (TWD30SRecord*) Record;
+		TableName = IDS_SQL_TABLE_WD30_S_MYSQL;
+		DateTime = SRecord->DateTime;
+		break;
+	default:
+		throw EArgumentOutOfRangeException(IntToStr(SaveToServer));
+	}
 
 	String Name;
 
@@ -533,60 +407,117 @@ void WD30SSaveToServer(TSettings * Settings, TWD30SRecord * Record,
 		String Columns = "scales, bdatetime";
 		String Params = ":scales, :bdatetime";
 
-		for (int i = 1; i <= WD30_Z_COUNT; i++) {
-			if (Record->Z->Z[i] != WD30_Z_NULL_VALUE) {
-				Name = "m" + IntToStr(i);
-				Columns = Columns + ", " + Name;
-				Params = Params + ", " + ":" + Name;
+		switch (SaveToServer) {
+		case ssZ:
+			for (int i = 1; i <= WD30_Z_COUNT; i++) {
+				if (ZRecord->Z[i] != WD30_Z_NULL_VALUE) {
+					Name = "m" + IntToStr(i);
+					Columns = Columns + ", " + Name;
+					Params = Params + ", " + ":" + Name;
+				}
 			}
-		}
-		for (int i = 1; i <= WD30_T_COUNT; i++) {
-			if (Record->T->T[i] != WD30_T_NULL_VALUE) {
-				Name = "t" + IntToStr(i);
-				Columns = Columns + ", " + Name;
-				Params = Params + ", " + ":" + Name;
+			break;
+		case ssT:
+			for (int i = 1; i <= WD30_T_COUNT; i++) {
+				if (TRecord->T[i] != WD30_T_NULL_VALUE) {
+					Name = "t" + IntToStr(i);
+					Columns = Columns + ", " + Name;
+					Params = Params + ", " + ":" + Name;
+				}
 			}
+			break;
+		case ssS:
+			for (int i = 1; i <= WD30_Z_COUNT; i++) {
+				if (SRecord->Z->Z[i] != WD30_Z_NULL_VALUE) {
+					Name = "m" + IntToStr(i);
+					Columns = Columns + ", " + Name;
+					Params = Params + ", " + ":" + Name;
+				}
+			}
+			for (int i = 1; i <= WD30_T_COUNT; i++) {
+				if (SRecord->T->T[i] != WD30_T_NULL_VALUE) {
+					Name = "t" + IntToStr(i);
+					Columns = Columns + ", " + Name;
+					Params = Params + ", " + ":" + Name;
+				}
+			}
+			break;
 		}
 
 		SQLAdd(Query, IDS_SQL_INSERT);
-		SQLAdd(Query, IDS_SQL_TABLE_WD30_S_MYSQL);
+		SQLAdd(Query, TableName);
 		SQLAdd(Query, "(" + Columns + ")");
 		SQLAdd(Query, IDS_SQL_VALUES);
 		SQLAdd(Query, "(" + Params + ")");
 
-		// WriteToLog(Query->SQL->Text);
+		SQLSetParam(Query, "scales", ScaleNum);
+		SQLSetParam(Query, "bdatetime", DateTime);
 
-		SQLSetParam(Query, "scales", Settings->WD30ScaleNum);
-		SQLSetParam(Query, "bdatetime", Record->DateTime);
-
-		for (int i = 1; i <= WD30_Z_COUNT; i++) {
-			if (Record->Z->Z[i] != WD30_Z_NULL_VALUE) {
-				Name = "m" + IntToStr(i);
-				SQLSetParam(Query, Name, Record->Z->Z[i]);
+		switch (SaveToServer) {
+		case ssZ:
+			for (int i = 1; i <= WD30_Z_COUNT; i++) {
+				if (ZRecord->Z[i] != WD30_Z_NULL_VALUE) {
+					Name = "m" + IntToStr(i);
+					SQLSetParam(Query, Name, ZRecord->Z[i]);
+				}
 			}
-		}
-		for (int i = 1; i <= WD30_T_COUNT; i++) {
-			if (Record->T->T[i] != WD30_T_NULL_VALUE) {
-				Name = "t" + IntToStr(i);
-				SQLSetParam(Query, Name, Record->T->T[i]);
+			break;
+		case ssT:
+			for (int i = 1; i <= WD30_T_COUNT; i++) {
+				if (TRecord->T[i] != WD30_T_NULL_VALUE) {
+					Name = "t" + IntToStr(i);
+					SQLSetParam(Query, Name, TRecord->T[i]);
+				}
 			}
+			break;
+		case ssS:
+			for (int i = 1; i <= WD30_Z_COUNT; i++) {
+				if (SRecord->Z->Z[i] != WD30_Z_NULL_VALUE) {
+					Name = "m" + IntToStr(i);
+					SQLSetParam(Query, Name, SRecord->Z->Z[i]);
+				}
+			}
+			for (int i = 1; i <= WD30_T_COUNT; i++) {
+				if (SRecord->T->T[i] != WD30_T_NULL_VALUE) {
+					Name = "t" + IntToStr(i);
+					SQLSetParam(Query, Name, SRecord->T->T[i]);
+				}
+			}
+			break;
 		}
 	}
 	else {
 		String Values = "";
 
-		for (int i = 1; i <= WD30_Z_COUNT; i++) {
-			Name = "m" + IntToStr(i);
-			Values = Values + ", " + Name + "=:" + Name;
+		switch (SaveToServer) {
+		case ssZ:
+			for (int i = 1; i <= WD30_Z_COUNT; i++) {
+				Name = "m" + IntToStr(i);
+				Values = Values + ", " + Name + "=:" + Name;
+			}
+			break;
+		case ssT:
+			for (int i = 1; i <= WD30_T_COUNT; i++) {
+				Name = "t" + IntToStr(i);
+				Values = Values + ", " + Name + "=:" + Name;
+			}
+			break;
+		case ssS:
+			for (int i = 1; i <= WD30_Z_COUNT; i++) {
+				Name = "m" + IntToStr(i);
+				Values = Values + ", " + Name + "=:" + Name;
+			}
+			for (int i = 1; i <= WD30_T_COUNT; i++) {
+				Name = "t" + IntToStr(i);
+				Values = Values + ", " + Name + "=:" + Name;
+			}
+			break;
 		}
-		for (int i = 1; i <= WD30_T_COUNT; i++) {
-			Name = "t" + IntToStr(i);
-			Values = Values + ", " + Name + "=:" + Name;
-		}
+
 		Values.Delete(1, 2);
 
 		SQLAdd(Query, IDS_SQL_UPDATE);
-		SQLAdd(Query, IDS_SQL_TABLE_WD30_S_MYSQL);
+		SQLAdd(Query, TableName);
 		SQLAdd(Query, IDS_SQL_SET);
 		SQLAdd(Query, Values);
 		SQLAdd(Query, IDS_SQL_WHERE);
@@ -594,36 +525,75 @@ void WD30SSaveToServer(TSettings * Settings, TWD30SRecord * Record,
 		SQLAdd(Query, IDS_SQL_AND);
 		SQLAdd(Query, "bdatetime=:bdatetime");
 
-		// WriteToLog(Query->SQL->Text);
+		SQLSetParam(Query, "scales", ScaleNum);
+		SQLSetParam(Query, "bdatetime", DateTime);
 
-		SQLSetParam(Query, "scales", Settings->WD30ScaleNum);
-		SQLSetParam(Query, "bdatetime", Record->DateTime);
-
-		for (int i = 1; i <= WD30_Z_COUNT; i++) {
-			Name = "m" + IntToStr(i);
-			if (Record->Z->Z[i] != WD30_Z_NULL_VALUE) {
-				SQLSetParam(Query, Name, Record->Z->Z[i]);
+		switch (SaveToServer) {
+		case ssZ:
+			for (int i = 1; i <= WD30_Z_COUNT; i++) {
+				Name = "m" + IntToStr(i);
+				if (ZRecord->Z[i] != WD30_Z_NULL_VALUE) {
+					SQLSetParam(Query, Name, ZRecord->Z[i]);
+				}
+				else {
+					Query->Parameters->ParamByName(Name)->DataType = ftInteger;
+					Query->Parameters->ParamByName(Name)->Value = Null();
+				}
 			}
-			else {
-				Query->Parameters->ParamByName(Name)->DataType = ftBoolean;
-				Query->Parameters->ParamByName(Name)->Value = Null();
+			break;
+		case ssT:
+			for (int i = 1; i <= WD30_T_COUNT; i++) {
+				Name = "t" + IntToStr(i);
+				if (TRecord->T[i] != WD30_T_NULL_VALUE) {
+					SQLSetParam(Query, Name, TRecord->T[i]);
+				}
+				else {
+					Query->Parameters->ParamByName(Name)->DataType = ftFloat;
+					Query->Parameters->ParamByName(Name)->Value = Null();
+				}
 			}
-		}
-		for (int i = 1; i <= WD30_T_COUNT; i++) {
-			Name = "t" + IntToStr(i);
-			if (Record->T->T[i] != WD30_T_NULL_VALUE) {
-				SQLSetParam(Query, Name, Record->T->T[i]);
+			break;
+		case ssS:
+			for (int i = 1; i <= WD30_Z_COUNT; i++) {
+				Name = "m" + IntToStr(i);
+				if (SRecord->Z->Z[i] != WD30_Z_NULL_VALUE) {
+					SQLSetParam(Query, Name, SRecord->Z->Z[i]);
+				}
+				else {
+					Query->Parameters->ParamByName(Name)->DataType = ftBoolean;
+					Query->Parameters->ParamByName(Name)->Value = Null();
+				}
 			}
-			else {
-				Query->Parameters->ParamByName(Name)->DataType = ftBoolean;
-				Query->Parameters->ParamByName(Name)->Value = Null();
+			for (int i = 1; i <= WD30_T_COUNT; i++) {
+				Name = "t" + IntToStr(i);
+				if (SRecord->T->T[i] != WD30_T_NULL_VALUE) {
+					SQLSetParam(Query, Name, SRecord->T->T[i]);
+				}
+				else {
+					Query->Parameters->ParamByName(Name)->DataType = ftBoolean;
+					Query->Parameters->ParamByName(Name)->Value = Null();
+				}
 			}
+			break;
 		}
 	}
+
+//	WriteToLog(Query->SQL->Text);
 
 	Query->Prepared = true;
 
 	SQLExec(Query);
+}
+
+// ---------------------------------------------------------------------------
+void WD30SaveToServer(TWD30SaveToServer SaveToServer, TSettings * Settings,
+	TObject * Record, TADOQuery * Query) {
+	try {
+		WD30SaveToServer(SaveToServer, Settings, Record, Query, true);
+	}
+	catch (...) {
+		WD30SaveToServer(SaveToServer, Settings, Record, Query, false);
+	}
 }
 
 // ---------------------------------------------------------------------------
@@ -643,22 +613,8 @@ int __fastcall SortLogsByDateTime(TStringList * List, int Index1, int Index2) {
 		return -1;
 	}
 
-	// 0000000001111111
-	// 1234567890123456
-	// _01012020_155358
-	try {
-		return CompareDateTime(EncodeDateTime(StrToInt(S1.SubString(6, 4)),
-			StrToInt(S1.SubString(4, 2)), StrToInt(S1.SubString(2, 2)),
-			StrToInt(S1.SubString(11, 2)), StrToInt(S1.SubString(13, 2)),
-			StrToInt(S1.SubString(15, 2)), 0),
-			EncodeDateTime(StrToInt(S2.SubString(6, 4)),
-			StrToInt(S2.SubString(4, 2)), StrToInt(S2.SubString(2, 2)),
-			StrToInt(S2.SubString(11, 2)), StrToInt(S2.SubString(13, 2)),
-			StrToInt(S2.SubString(15, 2)), 0));
-	}
-	catch (...) {
-		return 0;
-	}
+	return CompareDateTime(WD30LogNameToDateTime(S1),
+		WD30LogNameToDateTime(S2));
 }
 
 // ---------------------------------------------------------------------------
@@ -691,7 +647,11 @@ void MainFunctionWD30(TSettings * Settings) {
 
 	try {
 		WD30FindLogs(Settings->WD30Logs, LogFiles);
-		LogFiles->CustomSort(SortLogsByDateTime);
+		try {
+			LogFiles->CustomSort(SortLogsByDateTime);
+		}
+		catch (...) {
+		}
 
 		WD30LoadSyncList(LogFilesSyncList, 0);
 		WD30LoadSyncList(ZSyncList, 1);
@@ -723,23 +683,17 @@ void MainFunctionWD30(TSettings * Settings) {
 				SyncID = DateTimeToWD30SyncStr(ZRecords->Items[i]->DateTime);
 
 				if (!ZSyncList->Find(SyncID, NU)) {
-					try {
-						WD30ZSaveToServer(Settings, ZRecords->Items[i],
-							QueryServer, true);
-					}
-					catch (Exception &E) {
-						WD30ZSaveToServer(Settings, ZRecords->Items[i],
-							QueryServer, false);
-					}
+					WD30SaveToServer(ssZ, Settings, ZRecords->Items[i],
+						QueryServer);
 
 					ZSyncList->Add(SyncID);
 
 					NewZCount++;
+				}
 
-					ProcMess();
-					if (CheckExit()) {
-						throw EAbort(IDS_LOG_ERROR_TERMINATED_IN_WORK_PROGRESS);
-					}
+				ProcMess();
+				if (CheckExit()) {
+					throw EAbort(IDS_LOG_ERROR_TERMINATED_IN_WORK_PROGRESS);
 				}
 			}
 
@@ -748,23 +702,17 @@ void MainFunctionWD30(TSettings * Settings) {
 				SyncID = DateTimeToWD30SyncStr(TRecords->Items[i]->DateTime);
 
 				if (!TSyncList->Find(SyncID, NU)) {
-					try {
-						WD30TSaveToServer(Settings, TRecords->Items[i],
-							QueryServer, true);
-					}
-					catch (Exception &E) {
-						WD30TSaveToServer(Settings, TRecords->Items[i],
-							QueryServer, false);
-					}
+					WD30SaveToServer(ssT, Settings, TRecords->Items[i],
+						QueryServer);
 
 					TSyncList->Add(SyncID);
 
 					NewTCount++;
+				}
 
-					ProcMess();
-					if (CheckExit()) {
-						throw EAbort(IDS_LOG_ERROR_TERMINATED_IN_WORK_PROGRESS);
-					}
+				ProcMess();
+				if (CheckExit()) {
+					throw EAbort(IDS_LOG_ERROR_TERMINATED_IN_WORK_PROGRESS);
 				}
 			}
 
@@ -775,35 +723,32 @@ void MainFunctionWD30(TSettings * Settings) {
 				if (!SSyncList->Find(SyncID, NU)) {
 					if (WD30SLoadFromServer(Settings, SRecords->Items[i],
 						QueryServer)) {
-						try {
-							WD30SSaveToServer(Settings, SRecords->Items[i],
-								QueryServer, true);
-						}
-						catch (Exception &E) {
-							WD30SSaveToServer(Settings, SRecords->Items[i],
-								QueryServer, false);
-						}
+						WD30SaveToServer(ssS, Settings, SRecords->Items[i],
+							QueryServer);
 
 						NewSCount++;
 					}
 
 					SSyncList->Add(SyncID);
+				}
 
-					ProcMess();
-					if (CheckExit()) {
-						throw EAbort(IDS_LOG_ERROR_TERMINATED_IN_WORK_PROGRESS);
-					}
+				ProcMess();
+				if (CheckExit()) {
+					throw EAbort(IDS_LOG_ERROR_TERMINATED_IN_WORK_PROGRESS);
 				}
 			}
 
 			try {
 				if (NewZCount > 0) {
+					ZSyncList->Sort();
 					ZSyncList->SaveToFile(GetSyncFileFullName(SYNC_WD30Z));
 				}
 				if (NewTCount > 0) {
+					TSyncList->Sort();
 					TSyncList->SaveToFile(GetSyncFileFullName(SYNC_WD30T));
 				}
 				if (NewSCount > 0) {
+					TSyncList->Sort();
 					SSyncList->SaveToFile(GetSyncFileFullName(SYNC_WD30S));
 				}
 

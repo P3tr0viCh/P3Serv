@@ -132,8 +132,14 @@ void TfrmOptions::UpdateForm() {
 void TfrmOptions::UpdateSettings() {
 	Settings->OptionsPass = eOptionsPass->Text;
 
-	Settings->ProgramMode =
-		(TProgramMode)rgProgramMode->Items->Objects[rgProgramMode->ItemIndex];
+	if (rgProgramMode->ItemIndex < 0) {
+		Settings->ProgramMode = pmUnknown;
+	}
+	else {
+		Settings->ProgramMode =
+			(TProgramMode)rgProgramMode->Items->Objects
+			[rgProgramMode->ItemIndex];
+	}
 
 	Settings->TimerPeriod =
 		(int)cboxTimerPeriod->Items->Objects[cboxTimerPeriod->ItemIndex];
@@ -247,8 +253,8 @@ void __fastcall TfrmOptions::btnOkClick(TObject *Sender) {
 		return;
 	}
 
-	TCustomEdit * eScaleNum;
-	TCustomEdit * eDatabase;
+	TCustomEdit * eScaleNum = NULL;
+	TCustomEdit * eDatabase = NULL;
 
 	bool CheckFile = true;
 

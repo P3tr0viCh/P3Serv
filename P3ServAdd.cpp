@@ -197,6 +197,19 @@ String DateTimeToWD30SyncStr(TDateTime ADateTime) {
 }
 
 // ---------------------------------------------------------------------------
+TDateTime WD30LogNameToDateTime(String ALogName) {
+	// 0000000001111111
+	// 1234567890123456
+	// ||||||||||||||||
+	// _01012020_155358 < LogName
+	return EncodeDateTime(StrToInt(ALogName.SubString(6, 4)),
+		StrToInt(ALogName.SubString(4, 2)), StrToInt(ALogName.SubString(2, 2)),
+		StrToInt(ALogName.SubString(11, 2)),
+		StrToInt(ALogName.SubString(13, 2)),
+		StrToInt(ALogName.SubString(15, 2)), 0);
+}
+
+// ---------------------------------------------------------------------------
 String FloatToSQLStr(float Value) {
 	return StringReplace(FloatToStr(Value), COMMA, DOT, TReplaceFlags());
 }

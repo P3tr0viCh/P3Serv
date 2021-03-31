@@ -111,9 +111,10 @@
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Debug>true</VerInfo_Debug>
         <Icon_MainIcon>P3Serv_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=П3тр0виЧъ;FileDescription=Передача данных на ИСВС;FileVersion=1.3.0.0;InternalName=P3Serv;LegalCopyright=© П3тр0виЧъ;LegalTrademarks=П3тр0виЧъ;OriginalFilename=P3Serv.exe;ProgramID=ru.p3tr0vich.$(MSBuildProjectName);ProductName=Передача данных на ИСВС;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=П3тр0виЧъ;FileDescription=Передача данных на ИСВС;FileVersion=1.3.0.1;InternalName=P3Serv;LegalCopyright=© П3тр0виЧъ;LegalTrademarks=П3тр0виЧъ;OriginalFilename=P3Serv.exe;ProgramID=ru.p3tr0vich.$(MSBuildProjectName);ProductName=Передача данных на ИСВС;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_MinorVer>3</VerInfo_MinorVer>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Build>1</VerInfo_Build>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>
@@ -125,10 +126,11 @@
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Icon_MainIcon>P3Serv_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=П3тр0виЧъ;FileDescription=Передача данных на ИСВС;FileVersion=1.3.0.0;InternalName=P3Serv;LegalCopyright=© П3тр0виЧъ;LegalTrademarks=П3тр0виЧъ;OriginalFilename=P3Serv.exe;ProgramID=ru.p3tr0vich.$(MSBuildProjectName);ProductName=Передача данных на ИСВС;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=П3тр0виЧъ;FileDescription=Передача данных на ИСВС;FileVersion=1.3.0.1;InternalName=P3Serv;LegalCopyright=© П3тр0виЧъ;LegalTrademarks=П3тр0виЧъ;OriginalFilename=P3Serv.exe;ProgramID=ru.p3tr0vich.$(MSBuildProjectName);ProductName=Передача данных на ИСВС;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <LinkPackageStatics>rtl.lib;vcl.lib;dbrtl.lib;adortl.lib;VclSmp.lib;vclx.lib</LinkPackageStatics>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_MinorVer>3</VerInfo_MinorVer>
+        <VerInfo_Build>1</VerInfo_Build>
     </PropertyGroup>
     <ItemGroup>
         <CppCompile Include="..\!UtilsAndComps\AboutFrm.cpp">

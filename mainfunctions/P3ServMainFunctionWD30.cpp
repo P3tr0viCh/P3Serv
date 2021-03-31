@@ -180,7 +180,8 @@ void WD30Load(String LogName, TWD30ZRecordList * ZRecords,
 			}
 
 			// ----------- Температуры ---------------------------------------
-			// Температура дублируется, разница - 1 пробел и 2 пробела
+			// Температура дублируется, разница - 1 пробел и 2 пробела после T
+			// Последние два датчика всегда 0 (не существуют)
 
 			if (X == 'T') {
 				if (S.Length() < WD30_LOG_DATETIME + 4) {
@@ -217,6 +218,11 @@ void WD30Load(String LogName, TWD30ZRecordList * ZRecords,
 					Index++;
 
 					S.Delete(1, P);
+				}
+
+				if (Index > 4) {
+					TRecord->T[Index - 1] = WD30_T_NULL_VALUE;
+					TRecord->T[Index - 2] = WD30_T_NULL_VALUE;
 				}
 
 				TRecords->Add(TRecord);
@@ -279,6 +285,11 @@ void WD30Load(String LogName, TWD30ZRecordList * ZRecords,
 					}
 
 					S.Delete(1, P);
+				}
+
+				if (Index > 4) {
+					SRecord->T->T[Index - 1] = WD30_T_NULL_VALUE;
+					SRecord->T->T[Index - 2] = WD30_T_NULL_VALUE;
 				}
 
 				SRecords->Add(SRecord);
@@ -748,12 +759,13 @@ void MainFunctionWD30(TSettings * Settings) {
 					TSyncList->SaveToFile(GetSyncFileFullName(SYNC_WD30T));
 				}
 				if (NewSCount > 0) {
-					TSyncList->Sort();
+					SSyncList->Sort();
 					SSyncList->SaveToFile(GetSyncFileFullName(SYNC_WD30S));
 				}
 
 				if (!IsCurrentLog(LogNameOnly)) {
 					LogFilesSyncList->Add(LogNameOnly);
+					LogFilesSyncList->Sort();
 					LogFilesSyncList->SaveToFile
 						(GetSyncFileFullName(SYNC_WD30LOGS));
 				}
